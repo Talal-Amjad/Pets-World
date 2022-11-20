@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css?family=poppins:200,300,400,500,600,700,800,900&display=swap');
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+  box-sizing: 'poppins',sans-serif;  
+}
+
+section{
+  
+  position: relative;
+  width:100%;
+  height:100vh;
+  display:flex;
+}
+section .imagebox
+{
+  position: relative;
+  width:100%;
+  height:100%;
+
+}
+section .imagebox:before{
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height:100%;
+background:linear-gradient(225deg,grey 0%,rgb(141, 113, 35)100%);
+z-index: 1;
+mix-blend-mode: screen;
+}
+section .imagebox img{
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:100%;
+  object-fit:cover;
+  border-radius: 10%;
+}
+section .contentBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150%;
+  height:100%;
+}
+section .contentBox .formatBox{
+width: 50%;
+}
+section .contentBox .formatBox h2{
+  color: #607d8b;
+  font-weight: 600;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 4px solid rgb(141, 113, 35);
+  display: inline-block;
+  letter-spacing: 1px;
+}
+section .contentBox .formatBox h2:hover{
+  color: #607d8b;
+  font-weight: 600;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 4px solid rgb(54, 40, 2);
+  display: inline-block;
+  letter-spacing: 1px;
+ 
+}
+section .contentBox .formatBox .inputBox{
+  margin-bottom: 5px;
+}
+section .contentBox .formatBox .inputBox span{
+  font-size: 16px;
+  margin-bottom: 5px;
+  display:inline-block;
+  color: #607d8b;
+  font-weight: 300;
+  font-size:16px ;
+  letter-spacing: 1px;
+}
+section .contentBox .formatBox .inputBox input{
+ margin-top: 20%;
+ margin-bottom: 20%;
+  width: 8px;
+  padding: 10px 20px;
+  outline: none;
+  font-weight:400 ;
+  border:1px solid #607d8b;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #607d8b;
+  background: transparent;
+  border-radius: 300px;
+}
+section .contentBox .formatBox .inputBox input[type="submit"]
+{
+  background:linear-gradient(225deg,grey 0%,rgb(141, 113, 35)100%);
+
+  color: #fff;
+  outline:2px solid grey ;
+  border: 2px solid grey;
+  font-weight: 500;
+  cursor: pointer;
+}
+section .contentBox .formatBox .inputBox input[type="submit"]
+{
+  background:linear-gradient(225deg,grey 0%,rgb(141, 113, 35)100%);
+
+  color: #fff;
+  outline: none;
+  border: none;
+  font-weight: 500;
+  cursor:pointer
+
+}
+section .contentBox .formatBox .inputBox input[type="submit"]:hover{
+  background:  rgb(100, 80, 25);
+}
+section .contentBox .formatBox .inputBox p
+{
+  color: #607d8b;
+}
+section .contentBox .formatBox .inputBox p a
+{
+color: rgb(141, 113, 35) ;
+
+}
+section .contentBox .formatBox  h3{
+  color: #607d8b;
+  text-align: center;
+  margin:80px 0 10px;
+  font-weight:500;
+}
+@media (max-width: 768px ){
+  section {
+    position: relative;
+    width: 100%;
+    height: 150vh;
+    display: flex;
+}
+  section .contentBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 150%;
+    z-index: 1;
+}
+section .contentBox .formatBox {
+  width: 100%;
+  padding: 10px;
+  background: rgb(255 255 255/0.9);
+  margin: 50px;
+}
+section .contentBox .formatBox h3{
+  color: #607d8b;
+  text-align: center;
+  margin: 30px 0 10px;
+  font-weight: 500;
+}
+}
