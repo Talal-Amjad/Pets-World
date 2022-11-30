@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+<<<<<<< HEAD
 const bodyParser = require("body-parser");
 const functions=require("../controllers/controller");
 const transporter=require("../nodemailer/transporter");
@@ -21,6 +22,14 @@ router.post("/verifycode",functions.codeverification );
 //Storing data to database
 router.post("/RegisterUser",functions.register);
 
+=======
+
+
+//user routing pages
+router.get("/", (req, res) => { res.render("users/index"); });
+router.get("/Signin", (req, res) => { res.render("users/Signin"); });
+router.get("/signup", (req, res) => { res.render("users/signup"); });
+>>>>>>> d3a9e7f25d7f2dfad84611740962afc82cd63caa
 router.get("/changerequest", (req, res) => { res.render("users/pswChangeRequest"); });
 router.get("/changePassword", (req, res) => { res.render("users/changePassword"); });
 router.get("/changePassword", (req, res) => { res.render("users/changePassword"); });
@@ -37,4 +46,15 @@ router.get("/Payments", (req, res) => { res.render("Admin/Payments"); });
 router.get("/stock", (req, res) => { res.render("Admin/stock"); });
 router.get("/userDetails", (req, res) => { res.render("Admin/userDetails"); });
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+>>>>>>> d3a9e7f25d7f2dfad84611740962afc82cd63caa
 module.exports = router;
