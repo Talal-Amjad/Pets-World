@@ -109,7 +109,6 @@ module.exports=
 {
     signup,
     codeverification,
-
     register,
     signin,
 
