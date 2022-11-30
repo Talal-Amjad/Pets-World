@@ -15,14 +15,19 @@
    <div class="contentBox">
     <div class="formatBox">
         <h2>Login</h2>
-        <form action="">
+        <form action="/Signin" method="post">
             <div class="inputBox">
                 <span>Username</span>
-                <input type="text" name="">
+                <input type="text" name="username">
             </div>
             <div class="inputBox">
                 <span>Password</span>
-                <input type="password" name="">
+                <input type="password" name="password">
+            </div>
+            <div id="signIn-Role">
+                <Span id="role">Login As : </Span>
+                <input type='radio' name='role' value='admin' checked><Span id="role1">Admin</Span> 
+                <input type='radio' name='role' value='user'><Span id="role1">User</Span> <br><br>
             </div>
             <div class="remember">
                 <label for="">
@@ -30,6 +35,7 @@
                     Remember me
                 </label>
             </div>
+
             <div class="inputBox">
                 <input type="submit" value="Sign In"name="" href="/views/products.html">
                
@@ -37,7 +43,7 @@
             <div class="inputBox">
                 <p>
                     Don't have an account?
-                    <a href="/views/Signup.html">Sign up</a>
+                    <a href="/Signup">Sign up</a>
                 </p>
             </div>
         </form>
