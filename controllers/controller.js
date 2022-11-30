@@ -36,7 +36,11 @@ const signup=(req, res) => {
 }
 //code verification
 const codeverification=(req, res) => {
+<<<<<<< HEAD
     const Code = req.body.code;
+=======
+    const Code=req.body.code;
+>>>>>>> 77e8a4cedf9376e3429fe75636e5bcaf8985a8f1
     if (Code.toString() == req.session.code.toString()) {
         res.redirect(307,"/RegisterUser");
     }
@@ -64,6 +68,7 @@ const register=(req, res) => {
     })
 
 }
+<<<<<<< HEAD
 //function for signin
 const signin =(req, res) => {
 
@@ -100,10 +105,16 @@ const signin =(req, res) => {
         }
     })
 }
+=======
+>>>>>>> 77e8a4cedf9376e3429fe75636e5bcaf8985a8f1
 module.exports=
 {
     signup,
     codeverification,
+<<<<<<< HEAD
     register,
     signin
+=======
+    register
+>>>>>>> 77e8a4cedf9376e3429fe75636e5bcaf8985a8f1
 }
