@@ -39,17 +39,5 @@ router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 //admin routing
 
-router.get("/addproduct", Auth,(req, res) => { res.render("Admin/addproduct"); });
-router.get("/adminpanel", Auth,(req, res) => { res.render("Admin/adminpanel"); });
-router.get("/oders",Auth, (req, res) => { res.render("Admin/oders"); });
-router.get("/Payments",Auth, (req, res) => { res.render("Admin/Payments"); });
-router.get("/stock",Auth, (req, res) => { res.render("Admin/stock"); });
-router.get("/userDetails", Auth,(req, res) => { res.render("Admin/userDetails"); });
 
-router.get("/addproduct", (req, res) => { res.render("Admin/addproduct"); });
-router.get("/adminpanel", (req, res) => { res.render("Admin/adminpanel"); });
-router.get("/oders", (req, res) => { res.render("Admin/oders"); });
-router.get("/Payments", (req, res) => { res.render("Admin/Payments"); });
-router.get("/stock", (req, res) => { res.render("Admin/stock"); });
-router.get("/userDetails", (req, res) => { res.render("Admin/userDetails"); });
 module.exports = router;
