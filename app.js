@@ -1,25 +1,27 @@
-const hamburger = document.querySelector('.header .nav-bar .nav-list .hamburger');
-const mobile_menu = document.querySelector('.header .nav-bar .nav-list ul');
-const menu_item = document.querySelectorAll('.header .nav-bar .nav-list ul li a');
-const header = document.querySelector('.header.container');
+const express =require('express');
+const app=express();
+const path =require('path');
+const routes=require('./routes/petsworld');
+const cookieParser = require("cookie-parser");
+const session = require('express-session');
 
-hamburger.addEventListener('click', () => {
-	hamburger.classList.toggle('active');
-	mobile_menu.classList.toggle('active');
-});
+ app.set('view engine','ejs');
+ app.use(
+    session({
+        secret: "Web Project",
+        resave: false,
+        saveUninitialized: true,
+        cookie: { path: "/", httpOnly: true, secure: false, maxAge: 1 * 60 * 60 * 1000 },//session will expire after 1 hour
+    })
+);
+app.use(cookieParser())
+  
+ const publicPath = path.join(__dirname, "/public");
+ app.use(express.static(publicPath));
 
-document.addEventListener('scroll', () => {
-	var scroll_position = window.scrollY;
-	if (scroll_position > 250) {
-		header.style.backgroundColor = '#29323c';
-	} else {
-		header.style.backgroundColor = 'transparent';
-	}
-});
+ app.use("/", routes);
 
-menu_item.forEach((item) => {
-	item.addEventListener('click', () => {
-		hamburger.classList.toggle('active');
-		mobile_menu.classList.toggle('active');
-	});
-});
+ app.listen(3000, (err)=>{
+    if(err) throw err;
+    console.log(`Server Listening At Port 3000`);
+})

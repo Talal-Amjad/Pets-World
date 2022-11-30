@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="/CSS/user/Signin.css">
+</head>
+<body>
+    <section>
+   <div class="imagebox">
+    <img src="/images/caties.jpg" alt="Picture">
+   </div>   
+   <div class="contentBox">
+    <div class="formatBox">
+        <h2>Login</h2>
+        <form action="/Signin" method="post">
+            <div class="inputBox">
+                <span>Username</span>
+                <input type="text" name="">
+            </div>
+            <div class="inputBox">
+                <span>Password</span>
+                <input type="password" name="">
+            </div>
+            <div id="signIn-Role">
+                <Span id="role">Login As : </Span>
+                <input type='radio' name='role' value='admin' checked><Span id="role1">Admin</Span> 
+                <input type='radio' name='role' value='user'><Span id="role1">User</Span> <br><br>
+            </div>
+            <div class="remember">
+                <label for="">
+                    <input type="checkbox" name="" id="">
+                    Remember me
+                </label>
+            </div>
+
+            <div class="inputBox">
+                <input type="submit" value="Sign In"name="" href="/views/products.html">
+               
+            </div>
+            <div class="inputBox">
+                <p>
+                    Don't have an account?
+                    <a href="/Signup">Sign up</a>
+                </p>
+            </div>
+        </form>
+       
+    </div>
+   </div>  
+
+    </section>
+    
+</body>
+</html> 
