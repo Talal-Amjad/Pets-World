@@ -4,6 +4,16 @@ const Auth = (req, res, next) => {
     }
     next();
 };
+const userAuth = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect("/Signin");
+    }
+    next();
+};
 
 
-module.exports=Auth;
+module.exports=
+{
+    Auth,
+    userAuth
+};

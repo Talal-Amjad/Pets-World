@@ -16,48 +16,48 @@
 <div class="main-form">
     <div class="container">
       <h1 class="form-title">Add Product</h1>
-      <form action="#">
+      <form action="/addproduct" method="post" enctype="multipart/form-data">
         <div class="main-product-info">
           <div class="product-input-box">
             <label for="ProductID">Product ID</label>
             <input type="number"
                     id="ProductId"
-                    name="ProductID"
+                    name="pid"
                     placeholder="Enter Product ID"/>
           </div>
           <div class="product-input-box">
             <label for="ProductName">Product Name</label>
             <input type="text"
                     id="productName"
-                    name="productName"
+                    name="pname"
                     placeholder="Enter Product Name"/>
           </div>
           <div class="product-input-box">
             <label for="Discription">Discription</label>
             <input type="text"
                     id="discription"
-                    name="discription"
+                    name="dis"
                     placeholder="Enter Product Discription"/>
           </div>
           <div class="product-input-box">
-            <label for="phoneNumber">Catagoery</label>
-            <select name="" id="">
-                <option value="">Cat</option>
-                <option value="">Dog</option>
-                <option value="">Fish</option>
-                <option value="">Birds</option>
+            <label for="phoneNumber">Catagory</label>
+            <select name="catagory">
+                <option value="Cat">Cat</option>
+                <option value="Dog">Dog</option>
+                <option value="Fish">Fish</option>
+                <option value="Birds">Birds</option>
             </select>
           </div>
           <div class="product-input-box">
             <label for="price">price</label>
             <input type="number"
                     id=""
-                    name=""
+                    name="price"
                     placeholder="Enter price"/>
           </div>
           <div class="product-input-box" id="piture-box">
             <label for="product">Add Picture</label>
-            <input type="file" id="" name="">
+            <input type="file" id="" name="img">
             
           </div>
         </div>

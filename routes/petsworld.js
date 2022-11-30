@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const multer = require("multer");
 const bodyParser = require("body-parser");
 const functions=require("../controllers/controller");
 const transporter=require("../nodemailer/transporter");
@@ -9,6 +9,13 @@ const Auth = require("../middleware/auth");
 //for getting data from encrypted sent data
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+//images storage
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) { cb(null, "./public/images") },
+    filename: function (req, file, cb) { cb(null, file.originalname) }
+})
+const upload = multer({ storage: storage });
+
 
 
 
@@ -38,6 +45,14 @@ router.get("/productdetails", (req, res) => { res.render("users/productdetails")
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 //admin routing
+//routing addproducts
+router.get("/addproduct", (req, res) => { res.render("Admin/addproduct"); });
+router.post("/addproduct",Auth.Auth,upload.single("img"),functions.add);
+router.get("/adminpanel", Auth.Auth,(req, res) => { res.render("Admin/adminpanel"); });
+router.get("/oders",Auth.Auth, (req, res) => { res.render("Admin/oders"); });
+router.get("/Payments",Auth.Auth, (req, res) => { res.render("Admin/Payments"); });
+router.get("/stock",Auth.Auth, (req, res) => { res.render("Admin/stock"); });
+router.get("/userDetails", Auth.Auth,(req, res) => { res.render("Admin/userDetails"); });
 
 
 module.exports = router;

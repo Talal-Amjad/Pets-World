@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const transporter=require("../nodemailer/transporter");
-
+const multer=require('multer');
 //for getting data from encrypted sent data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -162,7 +162,26 @@ const changepassword=(req,res)=>
         }
     })
 }
+//add product for Admin
+const add =(req, res) => {
 
+    if (!req.file) {
+        return req.statusCode(404).send("No File Recieved!");
+    }
+
+    const pid = req.body.pid;
+    const Name = req.body.pname;
+    const dis=req.body.dis;
+    const catagory=req.body.catagory;
+    const price=req.body.price;
+    const img = req.file.originalname;
+
+    const Query = `INSERT INTO PRODUCTS  (pid,PName,Discription,Catagory,price,Picture) VALUES ('${pid}','${Name}','${dis}','${catagory}','${price}','${img}' )`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/stock");
+    })
+}
 module.exports=
 {
     signup,
@@ -170,5 +189,6 @@ module.exports=
     register,
     signin,
     changerequest ,
-    changepassword 
+    changepassword,
+    add
 }
