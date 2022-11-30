@@ -9,7 +9,7 @@
 .sidebar{
   position: fixed;
   height: 100%;
-  width: 200px;
+  width: 240px;
   background: #0A2558;
   transition: all 0.5s ease;
 }

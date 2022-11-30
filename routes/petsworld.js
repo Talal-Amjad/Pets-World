@@ -51,7 +51,9 @@ router.post("/addproduct",Auth.Auth,upload.single("img"),functions.add);
 router.get("/adminpanel", Auth.Auth,(req, res) => { res.render("Admin/adminpanel"); });
 router.get("/oders",Auth.Auth, (req, res) => { res.render("Admin/oders"); });
 router.get("/Payments",Auth.Auth, (req, res) => { res.render("Admin/Payments"); });
-router.get("/stock",Auth.Auth, (req, res) => { res.render("Admin/stock"); });
+//stock routing
+// router.get("/stock", (req, res) => { res.render("Admin/stock"); });
+router.get("/stock",functions.stock);
 router.get("/userDetails", Auth.Auth,(req, res) => { res.render("Admin/userDetails"); });
 
 

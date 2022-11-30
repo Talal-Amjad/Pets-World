@@ -175,13 +175,31 @@ const add =(req, res) => {
     const catagory=req.body.catagory;
     const price=req.body.price;
     const img = req.file.originalname;
+    const quantity=req.body.quantity;
 
-    const Query = `INSERT INTO PRODUCTS  (pid,PName,Discription,Catagory,price,Picture) VALUES ('${pid}','${Name}','${dis}','${catagory}','${price}','${img}' )`;
+    const Query = `INSERT INTO PRODUCTS  (pid,PName,Discription,Catagory,price,Picture,quantity) VALUES ('${pid}','${Name}','${dis}','${catagory}','${price}','${img}','${quantity}' )`;
     connection.query(Query, function (err, result) {
         if (err) throw err;
         res.redirect("/stock");
     })
 }
+//admin stock view
+const stock =(req, res) => 
+{
+    const Query = "SELECT * FROM Products";
+        connection.query(Query, function (err, result) {
+            if (err) throw err;
+            // console.log(result);
+            
+            res.render("Admin/stock",
+                {
+                    data: result,
+                   
+                }
+                
+            );
+        }
+)}
 module.exports=
 {
     signup,
@@ -190,5 +208,6 @@ module.exports=
     signin,
     changerequest ,
     changepassword,
-    add
+    add,
+    stock
 }

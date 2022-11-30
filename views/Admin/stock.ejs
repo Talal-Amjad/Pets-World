@@ -99,104 +99,44 @@
                 <i class='bx bx-search'></i>
             </div>
         </nav>
-    <h1>Rable</h1>
-    <table >
+        <h1>Rable</h1>
+        <table>
 
- 
 
-        <tr>
-       
-        <th>#</th>
-       
-        <th>Product Name</th>
-       
-        <th>Disription</th>
-       
-        <th>Catageory </th>
-       
-        <th>Unit Price</th>
-        <th>Picture</th>
-        <th>Edit</th>
-        <th>Delete</th>
-       
-        </tr>
-       
-       
-         <tr>
-       
-        <td>1</td>
-       
-        <td>Dry Meet</td>
-       
-        <td>A healthy meet for dogs</td>
-       
-        <td>Dog Food</td>
-       
-        <td>3000</td>
-        <td></td>
-        <td> 
-            <a href="" class="btn btn-primary">Edit</a>
-           
-        </td>
-        <td> 
-          
-            <a href="" class="btn btn-danger">Del</a>
-        </td>
-       
-        </tr>
-        <tr>
-       
-            <td>2</td>
-           
-            <td>Dry Meet</td>
-           
-            <td>A healthy meet for dogs</td>
-           
-            <td>Dog Food</td>
-           
-            <td>3000</td>
-            <td></td>
-            <td> 
-                <a href="" class="btn btn-primary">Edit</a>
-               
-            </td>
-            <td> 
-              
-                <a href="" class="btn btn-danger">Del</a>
-            </td>
-           
-            </tr>
-       
-            <tr>
-       
-                <td>3</td>
-               
-                <td>Dry Meet</td>
-               
-                <td>A healthy meet for dogs</td>
-               
-                <td>Dog Food</td>
-               
-                <td>3000</td>
-                <td></td>
-                <td> 
-                    <a href="" class="btn btn-primary">Edit</a>
-                   
-                </td>
-                <td> 
-                  
-                    <a href="" class="btn btn-danger">Del</a>
-                </td>
-               
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Disription</th>
+                    <th>Catageory </th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
-     
-       
-        </table>
-       
-    </section>
-   
+            </thead>
+            <tbody>
+                
+                <% data.forEach(function(product){ %>
+                <tr>
+                    <td><%=product.pid%></td>
+                    <td><%=product.PName%></td>
+                    <td><%=product.Discription%></td>
+                    <td><%=product.Catagory%></td>
+                    <td><%=product.price%></td>
+                    <td><%=product.quantity%></td>
+                    <td> <a href="" class="btn btn-primary">Edit</a></td>
+                    <td> <a href="" class="btn btn-danger">Del</a> </td>
+                </tr>
+                <%})%>
+            </tbody>
 
-    <script src="/public/script/Admin/stock.js"></script>
+        </table>
+
+    </section>
+
+
+    <script src="/script/Admin/stock.js"></script>
 </body>
 
 </html>
