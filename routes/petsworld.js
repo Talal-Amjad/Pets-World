@@ -10,21 +10,7 @@ const Auth = require("../middleware/auth");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-//user routing pages
-router.get("/", (req, res) => { res.render("users/index"); });
-router.get("/Signin", (req, res) => { res.render("users/Signin"); });
-//Routing for signup
-router.get("/Signup", (req, res) => { res.render("users/Signup"); });
-//TAking data from user
-router.post("/Signup",functions.signup);
-//code verification
-router.post("/verifycode",functions.codeverification );
-//Storing data to database
-router.post("/RegisterUser",functions.register);
 
-//for getting data from encrypted sent data
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
 
 //user routing pages
 router.get("/", (req, res) => { res.render("users/index"); });
@@ -38,14 +24,14 @@ router.post("/verifycode",functions.codeverification );
 router.post("/RegisterUser",functions.register);
 //routing for signin
 router.get("/Signin", (req, res) => { res.render("users/Signin"); });
-
+//fetcing data from 
 router.post("/Signin",functions.signin);
-
-router.get("/signup", (req, res) => { res.render("users/signup"); });
-
+//routing for password change request.
 router.get("/changerequest", (req, res) => { res.render("users/pswChangeRequest"); });
+router.post("/changerequest", functions.changerequest);
+//routing for changing password
 router.get("/changePassword", (req, res) => { res.render("users/changePassword"); });
-router.get("/changePassword", (req, res) => { res.render("users/changePassword"); });
+router.post("/changePassword",functions.changepassword);
 router.get("/Feedback", (req, res) => { res.render("users/Feedback"); });
 router.get("/products", (req, res) => { res.render("users/products"); });
 router.get("/productdetails", (req, res) => { res.render("users/productdetails"); });

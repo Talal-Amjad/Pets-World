@@ -104,6 +104,64 @@ const signin =(req, res) => {
         }
     })
 }
+//forget password
+const changerequest=(req, res) => {
+
+  
+    const Email = req.body.email;
+    
+
+    const user = {Email:Email};
+    req.session.newUser = user;
+
+    const code = "200190";
+
+    req.session.code = code;
+
+    let mail = transporter.sendMail({
+        from: '"Talal Amjad" <petsworld0290@gmail>',
+        to: `${Email}`,
+        subject: "Password updation Verification Code",
+        text: "Hello world?",
+        html: `<h1>PetsWorld Verification Code!</h1>
+               <p><b>Your Code is : ${code}</b></p>`
+    });
+    res.render("users/changePassword");
+};
+//chaange password
+const changepassword=(req,res)=>
+{
+    const username = req.body.username;
+    const code1 = req.body.code;
+    const password = req.body.password;
+    const user = {UserName:username,Password:password};
+    req.session.newUser = user;
+
+    const code = "200190";
+
+    req.session.code = code;
+    const Query = `SELECT * from USER WHERE UserName = '${username}'`;
+    connection.query(Query, function (err, result, fields) {
+        if (err) throw err;
+        if (result.length > 0) {
+            if (code1!=code){
+                res.send('Invalid Verification Code')
+            }
+        
+            else{
+                const Query1 = `UPDATE USER SET password = '${password}' WHERE username = '${username}'`;
+                connection.query(Query1, function (err, result) {
+                    if (err) throw err;
+                    res.redirect("/Signin");
+                })
+            }
+           
+        }
+        else{
+            res.send('Wrong details')
+        }
+    })
+}
 
 module.exports=
 {
@@ -111,6 +169,6 @@ module.exports=
     codeverification,
     register,
     signin,
-
-    register 
+    changerequest ,
+    changepassword 
 }
