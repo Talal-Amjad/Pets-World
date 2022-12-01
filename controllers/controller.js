@@ -182,8 +182,6 @@ const products =(req, res) =>
 }
 //productDetails
 const productDetails=(req, res) => {
-
-
     const pid = req.params.pid;
     const Query = `Select * from products  WHERE pid = '${pid}'`;
     connection.query(Query, function (err, result) {
