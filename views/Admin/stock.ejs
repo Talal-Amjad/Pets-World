@@ -125,8 +125,8 @@
                     <td><%=product.Catagory%></td>
                     <td><%=product.price%></td>
                     <td><%=product.quantity%></td>
-                    <td> <a href="" class="btn btn-primary">Edit</a></td>
-                    <td> <a href="" class="btn btn-danger">Del</a> </td>
+                    <td> <a href="/update/<%= product.pid %>" class="btn btn-primary">Edit</a></td>
+                    <td> <a href="/stock/<%= product.pid %>" class="btn btn-danger">Del</a> </td>
                 </tr>
                 <%})%>
             </tbody>

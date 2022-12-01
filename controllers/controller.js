@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const transporter=require("../nodemailer/transporter");
 const multer=require('multer');
+const { time } = require("console");
 //for getting data from encrypted sent data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -89,7 +90,7 @@ const signin =(req, res) => {
                 const admin = { username: UserName, password: Password };
                 req.session.admin = admin;
                 res.cookie("CurrentRole", "Admin");
-                res.redirect("/adminpanel");
+                res.redirect("/stock");
             }
             else if (Role == "user") {
                 const user = { username: UserName, password: Password };
@@ -187,16 +188,40 @@ const productDetails=(req, res) => {
     connection.query(Query, function (err, result) {
         if (err) throw err;
         // console.log(result);
-        
-        res.render("users/productDetails",
-            {
-                data: result,
-               
-            }
-            
-        );
+        //quer for displaying comments
+const Query2 = `Select * from comments  WHERE pid = '${pid}'`;
+connection.query(Query2, function(err, result2) {
+    if (err) throw err;
+    
+    res.render("users/productDetails",
+    {
+        data: result,
+       data2: result2
     }
-)}
+    
+);
+})})}
+//comments
+const comment=(req,res)=>{
+    var date_ob = new Date();
+    var day = ("0" + date_ob.getDate()).slice(-2);
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    var year = date_ob.getFullYear();
+    var date = year + "-" + month + "-" + day;
+    var hours = date_ob.getHours();
+    var minutes = date_ob.getMinutes();
+    var seconds = date_ob.getSeconds();
+    var dateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+    console.log(dateTime);
+    const comment=req.body.comments;
+    const id=req.params.id;
+    const username=req.session.user.username;
+    const Query = `INSERT INTO comments VALUES('${id}','${username}','${comment}','${dateTime.toString()}')`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect(`/productDetails/${id}`);
+    })
+}
 //add product for Admin
 const add =(req, res) => {
 
@@ -235,6 +260,45 @@ const stock =(req, res) =>
             );
         }
 )}
+//product deletion
+const deletetion=(req, res) => {
+    const id = req.params.pid;
+    const Query = `DELETE FROM PRODUCTS WHERE pid = '${id}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/stock");
+    })
+}
+//update
+const selection_update= (req, res) => {
+    const id = req.params.pid;
+    const Query = `SELECT * from products WHERE pid = '${id}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.render("Admin/update", { data: result });
+    })
+}
+const update=(req, res) => {
+
+    if (!req.file) {
+        return req.statusCode(404).send("No File Recieved!");
+    }
+
+    const pid = req.params.pid;
+    const Name = req.body.pname;
+    const dis=req.body.dis;
+    const catagory=req.body.catagory;
+    const price=req.body.price;
+    const img = req.file.originalname;
+    const quantity=req.body.quantity;
+
+    const Query = `UPDATE Products SET PName = '${Name}', Discription = '${dis}',  Catagory = '${catagory}', price = '${price}',quantity='${quantity}' WHERE pid = '${pid}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/stock");
+    })
+}
+
 module.exports=
 {
     signup,
@@ -245,6 +309,10 @@ module.exports=
     changepassword,
     products,
     productDetails,
+    comment,
     add,
-    stock
+    stock,
+    deletetion,
+    selection_update,
+    update
 }

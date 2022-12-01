@@ -38,55 +38,132 @@
   </section>
   <!-- End Header -->
   <% data.forEach(function(item){ %>
-  <div class="hero">
-    <div class="row">
+    <div class="hero">
+      <div class="row">
         <div class="col">
 
-            <div class="slider">
-               
-                <div class="preview">
-                    <img src="/images/<%= item.picture %>" id="imagebox" alt="picture">
-                </div>
+          <div class="slider">
+
+            <div class="preview">
+              <img src="/images/<%= item.picture %>" id="imagebox" alt="picture">
             </div>
+          </div>
 
         </div>
         <div class="col">
 
-            <div class="content">
-                <p class="brand">ID: <%= item.pid %></p>
-                <h2><%= item.PName %></h2>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p class="price"> <%= item.Discription %> </p>
-                <p class="price"> Catagory: <%= item.Catagory %> </p>
-                <p class="price"> <%= item.price %> </p>
-                <button type="button">
-                    <i class="fa fa-shopping-cart"></i>
-                    Add to cart</button>
+          <div class="content">
+            <p class="brand">ID: <%= item.pid %>
+            </p>
+            <h2>
+              <%= item.PName %>
+            </h2>
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-o"></i>
             </div>
+            <p class="price">
+              <%= item.Discription %>
+            </p>
+            <p class="price"> Catagory: <%= item.Catagory %>
+            </p>
+            <p class="price">
+              <%= item.price %>
+            </p>
+            <button type="button">
+              <i class="fa fa-shopping-cart"></i>
+              Add to cart</button>
+          </div>
 
         </div>
-    </div>
-    <% }); %>
+      </div>
+      <div class="center">
 
-    <div class="center">
-     
-      <form action="" method="post">
+        <form action="/comments/<%= item.pid %>" method="post">
+
+          <div class="txt_field">
+            <input type="text" placeholder="Add a Comment........" name="comments">
+
+          </div>
+          <input type="submit" value="Post a comment">
+
+        </form>
+      </div>
+      <% }); %>
+        <!-- For Displaying Comments  -->
+
+    <!-- </div>
+    <div class="commentsContainer">
+      <div class="item">
+        <h1>All Comments</h1>
+
+        <div class="content">
+          <% data2.forEach(function(item2){ %>
+            <p><Strong>
+                <%= item2.username %>
+              </Strong><br><%= item2.comment%>
+              <small><%= item2.time%></small>
+            </p>
+            <% }); %>
+        </div>
+      </div>
       
-        <div class="txt_field">
-          <input type="text"  placeholder="Add a Comment........" name="password">
-         
-        </div>
-        <input type="submit" value="Post a comment">
+    </div> -->
+
+
+    <!-- test -->
+    <% data2.forEach(function(item2){ %>
+    <div class="comment-thread">
+      <!-- Comment 1 start -->
+      <details open class="comment" id="comment-1">
+          <summary>
+              <div class="comment-heading">
+                  <div class="comment-info">
+                      <a href="#" class="comment-author">  <%= item2.username %></a>
+                      <p class="m-0">
+                        <%= item2.time%>
+                      </p>
+                  </div>
+              </div>
+          </summary>
   
-      </form>
-    </div>
-    
-   
+          <div class="comment-body">
+              <p>
+                  <%= item2.comment%>
+              </p>
+              <button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Reply</button>
+            
+              <!-- Reply form start -->
+              <form method="POST" class="reply-form d-none" id="comment-1-reply-form">
+                  <textarea placeholder="Reply to comment" rows="4"></textarea>
+                  <button type="submit">Submit</button>
+                  <button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Cancel</button>
+              </form>
+              <!-- Reply form end -->
+          </div>
+  
+          </div>
+      </details>
+      <!-- Comment 1 end -->
+  </div>
+  <% }); %>
+<script>
+  document.addEventListener(
+    "click",
+    function(event) {
+        var target = event.target;
+        var replyForm;
+        if (target.matches("[data-toggle='reply-form']")) {
+            replyForm = document.getElementById(target.getAttribute("data-target"));
+            replyForm.classList.toggle("d-none");
+        }
+    },
+    false
+);
+</script>
 </body>
+
 </html>

@@ -44,7 +44,8 @@ router.get("/Feedback", (req, res) => { res.render("users/Feedback"); });
 router.get("/products",functions.products );
 //product details
 router.get("/productDetails/:pid",functions.productDetails);
-
+//comments
+router.post("/comments/:id",functions.comment);
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 //admin routing
@@ -55,8 +56,12 @@ router.get("/adminpanel", Auth.Auth,(req, res) => { res.render("Admin/adminpanel
 router.get("/oders",Auth.Auth, (req, res) => { res.render("Admin/oders"); });
 router.get("/Payments",Auth.Auth, (req, res) => { res.render("Admin/Payments"); });
 //stock routing
-// router.get("/stock", (req, res) => { res.render("Admin/stock"); });
 router.get("/stock",functions.stock);
+//deletion
+router.get("/stock/:pid", Auth.Auth,functions.deletetion );
+//updations
+router.get("/update/:pid", Auth.Auth,functions.selection_update);
+router.post("/update/:pid", Auth.Auth, upload.single("img"),functions.update );
 router.get("/userDetails",(req, res) => { res.render("Admin/userDetails"); });
 
 
