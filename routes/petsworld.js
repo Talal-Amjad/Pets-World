@@ -40,8 +40,11 @@ router.post("/changerequest", functions.changerequest);
 router.get("/changePassword", (req, res) => { res.render("users/changePassword"); });
 router.post("/changePassword",functions.changepassword);
 router.get("/Feedback", (req, res) => { res.render("users/Feedback"); });
-router.get("/products", (req, res) => { res.render("users/products"); });
-router.get("/productdetails", (req, res) => { res.render("users/productdetails"); });
+//routing for Products
+router.get("/products",functions.products );
+//product details
+router.get("/productDetails/:pid",functions.productDetails);
+
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 //admin routing
@@ -54,7 +57,7 @@ router.get("/Payments",Auth.Auth, (req, res) => { res.render("Admin/Payments"); 
 //stock routing
 // router.get("/stock", (req, res) => { res.render("Admin/stock"); });
 router.get("/stock",functions.stock);
-router.get("/userDetails", Auth.Auth,(req, res) => { res.render("Admin/userDetails"); });
+router.get("/userDetails",(req, res) => { res.render("Admin/userDetails"); });
 
 
 module.exports = router;

@@ -162,6 +162,43 @@ const changepassword=(req,res)=>
         }
     })
 }
+//user products view
+const products =(req, res) => 
+{
+    const Query = "SELECT * FROM Products";
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        // console.log(result);
+        
+        res.render("users/products",
+            {
+                data: result,
+               
+            }
+            
+        );
+    }
+)
+}
+//productDetails
+const productDetails=(req, res) => {
+
+
+    const pid = req.params.pid;
+    const Query = `Select * from products  WHERE pid = '${pid}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        // console.log(result);
+        
+        res.render("users/productDetails",
+            {
+                data: result,
+               
+            }
+            
+        );
+    }
+)}
 //add product for Admin
 const add =(req, res) => {
 
@@ -208,6 +245,8 @@ module.exports=
     signin,
     changerequest ,
     changepassword,
+    products,
+    productDetails,
     add,
     stock
 }
