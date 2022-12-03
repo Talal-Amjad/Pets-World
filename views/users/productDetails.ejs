@@ -95,7 +95,7 @@
       <% }); %>
         <!-- For Displaying Comments  -->
 
-    <!-- </div>
+    </div>
     <div class="commentsContainer">
       <div class="item">
         <h1>All Comments</h1>
@@ -111,59 +111,7 @@
         </div>
       </div>
       
-    </div> -->
-
-
-    <!-- test -->
-    <% data2.forEach(function(item2){ %>
-    <div class="comment-thread">
-      <!-- Comment 1 start -->
-      <details open class="comment" id="comment-1">
-          <summary>
-              <div class="comment-heading">
-                  <div class="comment-info">
-                      <a href="#" class="comment-author">  <%= item2.username %></a>
-                      <p class="m-0">
-                        <%= item2.time%>
-                      </p>
-                  </div>
-              </div>
-          </summary>
-  
-          <div class="comment-body">
-              <p>
-                  <%= item2.comment%>
-              </p>
-              <button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Reply</button>
-            
-              <!-- Reply form start -->
-              <form method="POST" class="reply-form d-none" id="comment-1-reply-form">
-                  <textarea placeholder="Reply to comment" rows="4"></textarea>
-                  <button type="submit">Submit</button>
-                  <button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Cancel</button>
-              </form>
-              <!-- Reply form end -->
-          </div>
-  
-          </div>
-      </details>
-      <!-- Comment 1 end -->
-  </div>
-  <% }); %>
-<script>
-  document.addEventListener(
-    "click",
-    function(event) {
-        var target = event.target;
-        var replyForm;
-        if (target.matches("[data-toggle='reply-form']")) {
-            replyForm = document.getElementById(target.getAttribute("data-target"));
-            replyForm.classList.toggle("d-none");
-        }
-    },
-    false
-);
-</script>
+    </div>
 </body>
 
 </html>

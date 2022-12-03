@@ -59,7 +59,7 @@
             <li>
                 <a href="#">
                     <i class='bx bx-user'></i>
-                    <span class="links_name">Team</span>
+                    <span class="links_name">users</span>
                 </a>
             </li>
             <li>
@@ -115,34 +115,20 @@
         <th>Email </th>
        
         <th>Password</th>
-       
-        <th>Edit</th>
         <th>Delete</th>
        
         </tr>
-       
-       
+       <%let i=0 %>
+        <% data.forEach(function(user){ %>
          <tr>
-       
-        <td>1</td>
-       
-        <td>Talal0190</td>
-       
-        <td>TAlal Amjad</td>
-       
-        <td>mtakamboh@gmail.com</td>
-       
-        <td>Talal@0190</td>
-       
-        <td> 
-            <a href="" class="btn btn-primary">Edit</a>
-           
-        </td>
-        <td> 
-          
-            <a href="" class="btn btn-danger">Del</a>
-        </td>
-       
+       <td><%=++i%></td>
+       <td><%=user.Name%></td>
+       <td><%=user.UserName%></td>
+        <td><%=user.email%></td>
+        <td><%=user.Password%></td>
+        <td> <a href="/userDetails/<%= user.UserName %>" class="btn btn-danger">Del</a> </td>
+        </tr>
+        <%})%>
         </table>
        
     </section>

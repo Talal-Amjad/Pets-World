@@ -39,8 +39,7 @@ const signup=(req, res) => {
 const codeverification=(req, res) => {
 
     const Code = req.body.code;
-    c
-
+    
     if (Code.toString() == req.session.code.toString()) {
         res.redirect(307,"/RegisterUser");
     }
@@ -298,7 +297,32 @@ const update=(req, res) => {
         res.redirect("/stock");
     })
 }
-
+//admin stock view
+const users =(req, res) => 
+{
+    const Query = "SELECT * from USER";
+        connection.query(Query, function (err, result) {
+            if (err) throw err;
+            // console.log(result);
+            
+            res.render("Admin/userDetails",
+                {
+                    data: result,
+                   
+                }
+                
+            );
+        }
+)}
+const deleteuser=(req, res) => {
+    const Name = req.params.UserName;
+   // res.send(Name);
+    const Query = `DELETE  from user WHERE UserName = '${Name}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/userDetails");
+    })
+}
 module.exports=
 {
     signup,
@@ -314,5 +338,7 @@ module.exports=
     stock,
     deletetion,
     selection_update,
-    update
+    update,
+    users,
+    deleteuser
 }
