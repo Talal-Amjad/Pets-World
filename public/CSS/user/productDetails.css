@@ -303,11 +303,26 @@ h2{
     font-weight: bold;
     padding-top: 10px;
 }
+.Quantity
+{
+	display: block;
+	color: rgb(141, 113, 35);
+    font-size: 20px;
+    padding-top: 10px;
+}
 input{
     width: 30px;
     border: 1px solid #ccc;
     font-weight: bold;
     text-align: center;
+}
+input[type="number"]
+{
+margin-left: 10px;
+margin-bottom: 10px;
+width: 50px;
+color:rgb(141, 113, 35); 
+font-size: 2rem;
 }
 button{
     color: #fff;

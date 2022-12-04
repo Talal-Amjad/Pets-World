@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/CSS/user/deliveryAddress.css">
+    <script defer src="/public/script/user/validations/DeliveryAddress.js"></script>
+    <title>Delivery Address </title>
+</head>
+
+<body>
+    <section>
+
+        <div class="imagebox">
+            <img src="/images/caties.jpg" alt="Picture">
+        </div>
+        <div class="container">
+
+            <form id="form" action="/invoice" onsubmit="validateInputs()" method="post">
+
+                <Div class="header">
+                    <h1>Delivery Details</h1>
+                </Div>
+                <div class="inputs">
+                    <span>Cell No:</span>
+                    <input type="number" placeholder=" 0000-0000000" id="CellNo" name="cellno">
+                    <div class="error"></div>
+                </div>
+                <div class="inputs">
+                    <span>Address:</span>
+                    <input type="text" placeholder="House No,street,City" id="address" name="address">
+                    <div class="error"></div>
+                </div>
+                <div class="inputs">
+                    <span>Postal Code:</span>
+                    <input type="number" placeholder=" 000000" id="pcode" name="pcode">
+                    <div class="error"></div>
+                </div>
+                <input type="submit" value="submit" name="submit">
+                <input type="reset" value="Reset">
+
+            </form>
+        </div>
+    </section>
+</body>
+
+</html>

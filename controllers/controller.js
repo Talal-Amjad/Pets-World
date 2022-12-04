@@ -3,22 +3,22 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const transporter=require("../nodemailer/transporter");
-const multer=require('multer');
+const transporter = require("../nodemailer/transporter");
+const multer = require('multer');
 const { time } = require("console");
 //for getting data from encrypted sent data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Signup
-const signup=(req, res) => {
+const signup = (req, res) => {
 
-    const Name=req.body.Fname+req.body.Lname;
+    const Name = req.body.Fname + req.body.Lname;
     const username = req.body.username;
     const Email = req.body.email;
     const password = req.body.password;
 
-    const user = {Name:Name,UserName:username, Email:Email,Password:password};
+    const user = { Name: Name, UserName: username, Email: Email, Password: password };
     req.session.newUser = user;
     //res.send(user);
     const code = "1e4c734";
@@ -36,12 +36,12 @@ const signup=(req, res) => {
     res.render("users/verifycode");
 }
 //code verification
-const codeverification=(req, res) => {
+const codeverification = (req, res) => {
 
     const Code = req.body.code;
-    
+
     if (Code.toString() == req.session.code.toString()) {
-        res.redirect(307,"/RegisterUser");
+        res.redirect(307, "/RegisterUser");
     }
     else {
         req.session.code = null;
@@ -51,11 +51,11 @@ const codeverification=(req, res) => {
 
 }
 //Saving Data to database After code verification
-const register=(req, res) => {
+const register = (req, res) => {
 
     const data = req.session.newUser;
     //res.send(data);
-    const name=data.Name;
+    const name = data.Name;
     const username = data.UserName;
     const Email = data.Email;
     const password = data.Password;
@@ -69,7 +69,7 @@ const register=(req, res) => {
 }
 
 //function for signin
-const signin =(req, res) => {
+const signin = (req, res) => {
 
     const UserName = req.body.username;
     const Password = req.body.password;
@@ -105,15 +105,10 @@ const signin =(req, res) => {
     })
 }
 //forget password
-const changerequest=(req, res) => {
-
-  
+const changerequest = (req, res) => {
     const Email = req.body.email;
-    
-
-    const user = {Email:Email};
+    const user = { Email: Email };
     req.session.newUser = user;
-
     const code = "200190";
 
     req.session.code = code;
@@ -129,12 +124,11 @@ const changerequest=(req, res) => {
     res.render("users/changePassword");
 };
 //chaange password
-const changepassword=(req,res)=>
-{
+const changepassword = (req, res) => {
     const username = req.body.username;
     const code1 = req.body.code;
     const password = req.body.password;
-    const user = {UserName:username,Password:password};
+    const user = { UserName: username, Password: password };
     req.session.newUser = user;
 
     const code = "200190";
@@ -144,64 +138,65 @@ const changepassword=(req,res)=>
     connection.query(Query, function (err, result, fields) {
         if (err) throw err;
         if (result.length > 0) {
-            if (code1!=code){
+            if (code1 != code) {
                 res.send('Invalid Verification Code')
             }
-        
-            else{
+
+            else {
                 const Query1 = `UPDATE USER SET password = '${password}' WHERE username = '${username}'`;
                 connection.query(Query1, function (err, result) {
                     if (err) throw err;
                     res.redirect("/Signin");
                 })
             }
-           
+
         }
-        else{
+        else {
             res.send('Wrong details')
         }
     })
 }
 //user products view
-const products =(req, res) => 
-{
+const products = (req, res) => {
     const Query = "SELECT * FROM Products";
     connection.query(Query, function (err, result) {
         if (err) throw err;
         // console.log(result);
-        
+
         res.render("users/products",
             {
                 data: result,
-               
+
             }
-            
+
         );
     }
-)
+    )
 }
 //productDetails
-const productDetails=(req, res) => {
+const productDetails = (req, res) => {
     const pid = req.params.pid;
     const Query = `Select * from products  WHERE pid = '${pid}'`;
     connection.query(Query, function (err, result) {
         if (err) throw err;
         // console.log(result);
         //quer for displaying comments
-const Query2 = `Select * from comments  WHERE pid = '${pid}'`;
-connection.query(Query2, function(err, result2) {
-    if (err) throw err;
-    
-    res.render("users/productDetails",
-    {
-        data: result,
-       data2: result2
-    }
-    
-);
-})})}
+        const Query2 = `Select * from comments  WHERE pid = '${pid}'`;
+        connection.query(Query2, function (err, result2) {
+            if (err) throw err;
+
+            res.render("users/productDetails",
+                {
+                    data: result,
+                    data2: result2
+                }
+
+            );
+        })
+    })
+}
 //comments
-const comment=(req,res)=>{
+const comment = (req, res) => {
     var date_ob = new Date();
     var day = ("0" + date_ob.getDate()).slice(-2);
     var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
@@ -212,17 +207,90 @@ const comment=(req,res)=>{
     var seconds = date_ob.getSeconds();
     var dateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
     console.log(dateTime);
-    const comment=req.body.comments;
-    const id=req.params.id;
-    const username=req.session.user.username;
+    const comment = req.body.comments;
+    const id = req.params.id;
+    const username = req.session.user.username;
     const Query = `INSERT INTO comments VALUES('${id}','${username}','${comment}','${dateTime.toString()}')`;
     connection.query(Query, function (err, result) {
         if (err) throw err;
         res.redirect(`/productDetails/${id}`);
     })
 }
+//Selected item add to card
+const selected = (req, res) => {
+    const pid = req.params.pid;
+    const price = req.params.price;
+    const quantity = req.body.quantity;
+    const total= price * quantity;
+    console.log(total);
+    const username = req.session.user.username;
+    const status = 'NC';
+    const Query = `INSERT INTO Shoppingdetails VALUES('${username}','${pid}','${quantity}','${price}','${total}','${status}')`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect(`/products`);
+    })
+
+}
+//all itmes that are added to cart
+const add_to_cart_list=(req,res)=>
+{
+    const username=req.session.user.username;
+    const NC='NC';
+    const Query = `SELECT * from Shoppingdetails where username = '${username}' and status = '${NC}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+     //  console.log(result);
+     const price=result[0].quantity*result[0].price;
+    // console.log(price);
+    res.render("users/selected_list",
+            {
+                data: result,
+                totalprice:price
+            }
+
+        );
+    }
+    )
+}
+//invoice
+const invoice=(req,res)=>{
+const phone=req.body.cellno;
+const address=req.body.address;
+const pcode=req.body.pcode;
+/*=============================================*/
+const username=req.session.user.username;
+   // console.log(username,phone,address,pcode);
+    const NC='NC';
+    const Query = `SELECT * from Shoppingdetails where username = '${username}' and status = '${NC}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        //query to find total bill 
+        const Query2 = `SELECT sum(total) as pay_able_bill from Shoppingdetails where username = '${username}' and status = '${NC}'`;
+        connection.query(Query2, function (err, result2) {
+         // console.log(result2);
+            if (err) throw err;
+    res.render("users/invoice",
+            {
+                data: result,
+                phone:phone,
+                address:address,
+                pcode:pcode,
+                username:username,
+                data2:result2[0].pay_able_bill
+
+            }
+
+        )});
+    }
+    )
+
+}
+
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 //add product for Admin
-const add =(req, res) => {
+const add = (req, res) => {
 
     if (!req.file) {
         return req.statusCode(404).send("No File Recieved!");
@@ -230,11 +298,11 @@ const add =(req, res) => {
 
     const pid = req.body.pid;
     const Name = req.body.pname;
-    const dis=req.body.dis;
-    const catagory=req.body.catagory;
-    const price=req.body.price;
+    const dis = req.body.dis;
+    const catagory = req.body.catagory;
+    const price = req.body.price;
     const img = req.file.originalname;
-    const quantity=req.body.quantity;
+    const quantity = req.body.quantity;
 
     const Query = `INSERT INTO PRODUCTS  (pid,PName,Discription,Catagory,price,Picture,quantity) VALUES ('${pid}','${Name}','${dis}','${catagory}','${price}','${img}','${quantity}' )`;
     connection.query(Query, function (err, result) {
@@ -243,24 +311,24 @@ const add =(req, res) => {
     })
 }
 //admin stock view
-const stock =(req, res) => 
-{
+const stock = (req, res) => {
     const Query = "SELECT * FROM Products";
-        connection.query(Query, function (err, result) {
-            if (err) throw err;
-            // console.log(result);
-            
-            res.render("Admin/stock",
-                {
-                    data: result,
-                   
-                }
-                
-            );
-        }
-)}
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        // console.log(result);
+
+        res.render("Admin/stock",
+            {
+                data: result,
+
+            }
+
+        );
+    }
+    )
+}
 //product deletion
-const deletetion=(req, res) => {
+const deletetion = (req, res) => {
     const id = req.params.pid;
     const Query = `DELETE FROM PRODUCTS WHERE pid = '${id}'`;
     connection.query(Query, function (err, result) {
@@ -269,7 +337,7 @@ const deletetion=(req, res) => {
     })
 }
 //update
-const selection_update= (req, res) => {
+const selection_update = (req, res) => {
     const id = req.params.pid;
     const Query = `SELECT * from products WHERE pid = '${id}'`;
     connection.query(Query, function (err, result) {
@@ -277,7 +345,7 @@ const selection_update= (req, res) => {
         res.render("Admin/update", { data: result });
     })
 }
-const update=(req, res) => {
+const update = (req, res) => {
 
     if (!req.file) {
         return req.statusCode(404).send("No File Recieved!");
@@ -285,11 +353,11 @@ const update=(req, res) => {
 
     const pid = req.params.pid;
     const Name = req.body.pname;
-    const dis=req.body.dis;
-    const catagory=req.body.catagory;
-    const price=req.body.price;
+    const dis = req.body.dis;
+    const catagory = req.body.catagory;
+    const price = req.body.price;
     const img = req.file.originalname;
-    const quantity=req.body.quantity;
+    const quantity = req.body.quantity;
 
     const Query = `UPDATE Products SET PName = '${Name}', Discription = '${dis}',  Catagory = '${catagory}', price = '${price}',quantity='${quantity}' WHERE pid = '${pid}'`;
     connection.query(Query, function (err, result) {
@@ -298,42 +366,47 @@ const update=(req, res) => {
     })
 }
 //admin stock view
-const users =(req, res) => 
-{
+const users = (req, res) => {
     const Query = "SELECT * from USER";
-        connection.query(Query, function (err, result) {
-            if (err) throw err;
-            // console.log(result);
-            
-            res.render("Admin/userDetails",
-                {
-                    data: result,
-                   
-                }
-                
-            );
-        }
-)}
-const deleteuser=(req, res) => {
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        // console.log(result);
+
+        res.render("Admin/userDetails",
+            {
+                data: result,
+
+            }
+
+        );
+    }
+    )
+}
+const deleteuser = (req, res) => {
     const Name = req.params.UserName;
-   // res.send(Name);
+    // res.send(Name);
     const Query = `DELETE  from user WHERE UserName = '${Name}'`;
     connection.query(Query, function (err, result) {
         if (err) throw err;
         res.redirect("/userDetails");
     })
 }
-module.exports=
+module.exports =
 {
     signup,
     codeverification,
     register,
     signin,
-    changerequest ,
+    changerequest,
     changepassword,
     products,
     productDetails,
     comment,
+    selected,
+    add_to_cart_list,
+    invoice,
+   
+    /*--------------------------------------------------------*/
     add,
     stock,
     deletetion,

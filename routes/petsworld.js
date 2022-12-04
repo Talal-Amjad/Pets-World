@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const bodyParser = require("body-parser");
-const functions=require("../controllers/controller");
-const transporter=require("../nodemailer/transporter");
+const functions = require("../controllers/controller");
+const transporter = require("../nodemailer/transporter");
 const Auth = require("../middleware/auth");
 
 //for getting data from encrypted sent data
@@ -20,50 +20,59 @@ router.get("/", (req, res) => { res.render("users/index"); });
 //Routing for signup
 router.get("/Signup", (req, res) => { res.render("users/Signup"); });
 //TAking data from user
-router.post("/Signup",functions.signup);
+router.post("/Signup", functions.signup);
 //code verification
-router.post("/verifycode",functions.codeverification );
+router.post("/verifycode", functions.codeverification);
 //Storing data to database
-router.post("/RegisterUser",functions.register);
+router.post("/RegisterUser", functions.register);
 //routing for signin
 router.get("/Signin", (req, res) => { res.render("users/Signin"); });
 //fetcing data from 
-router.post("/Signin",functions.signin);
+router.post("/Signin", functions.signin);
 //routing for password change request.
 router.get("/changerequest", (req, res) => { res.render("users/pswChangeRequest"); });
 router.post("/changerequest", functions.changerequest);
 //routing for changing password
 router.get("/changePassword", (req, res) => { res.render("users/changePassword"); });
-router.post("/changePassword",functions.changepassword);
+router.post("/changePassword", functions.changepassword);
 router.get("/Feedback", (req, res) => { res.render("users/Feedback"); });
 //routing for Products
-router.get("/products",functions.products );
+router.get("/products", functions.products);
 //product details
-router.get("/productDetails/:pid",functions.productDetails);
+router.get("/productDetails/:pid", functions.productDetails);
 //comments
-router.post("/comments/:id",functions.comment);
+router.post("/comments/:id", functions.comment);
 router.get("/Billing", (req, res) => { res.render("users/Billing"); });
-router.get("/Billing", (req, res) => { res.render("users/Billing"); });
+//Add to card items
+router.post("/selectedproducts/:pid/:price", functions.selected);
+//list of products that are added to cart
+router.get("/selectedlist", functions.add_to_cart_list);
+//Delivery Address
+router.get("/deliveryAddress", (req, res) => { res.render("users/deliveryAddress"); });
+//bill
+router.post("/invoice", functions.invoice);
+//After confirming oder for send mail
 
-/*----------------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------------*/
+/*==================================================================================
+                                Admin Routing
+ ===================================================================================*/
 //admin routing
 //routing addproducts
 router.get("/addproduct", (req, res) => { res.render("Admin/addproduct"); });
-router.post("/addproduct",Auth.Auth,upload.single("img"),functions.add);
-router.get("/adminpanel", Auth.Auth,(req, res) => { res.render("Admin/adminpanel"); });
-router.get("/oders",Auth.Auth, (req, res) => { res.render("Admin/oders"); });
-router.get("/Payments",Auth.Auth, (req, res) => { res.render("Admin/Payments"); });
+router.post("/addproduct", Auth.Auth, upload.single("img"), functions.add);
+router.get("/adminpanel", Auth.Auth, (req, res) => { res.render("Admin/adminpanel"); });
+router.get("/oders", Auth.Auth, (req, res) => { res.render("Admin/oders"); });
+router.get("/Payments", Auth.Auth, (req, res) => { res.render("Admin/Payments"); });
 //stock routing
-router.get("/stock",functions.stock);
+router.get("/stock", functions.stock);
 //deletion
-router.get("/stock/:pid", Auth.Auth,functions.deletetion );
+router.get("/stock/:pid", Auth.Auth, functions.deletetion);
 //updations
-router.get("/update/:pid", Auth.Auth,functions.selection_update);
-router.post("/update/:pid", Auth.Auth, upload.single("img"),functions.update );
+router.get("/update/:pid", Auth.Auth, functions.selection_update);
+router.post("/update/:pid", Auth.Auth, upload.single("img"), functions.update);
 //all users list
-router.get("/userDetails",functions.users);
+router.get("/userDetails", functions.users);
 //user deletion
 //deletion
-router.get("/userDetails/:UserName", Auth.Auth,functions.deleteuser );
+router.get("/userDetails/:UserName", Auth.Auth, functions.deleteuser);
 module.exports = router;

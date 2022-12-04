@@ -21,7 +21,7 @@ app.use(cookieParser())
 
  app.use("/", routes);
 
- app.listen(3000, (err)=>{
+ app.listen(4000, (err)=>{
     if(err) throw err;
-    console.log(`Server Listening At Port 3000`);
+    console.log(`Server Listening At Port 4000`);
 })
