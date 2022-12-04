@@ -18,15 +18,15 @@
         <form action="/Signup" method="post">
             <div class="inputBox">
                 <span>First Name</span>
-                <input type="text" name="Fname" required>
+                <input type="text" name="Fname" minlength="3" required >
             </div>
             <div class="inputBox">
               <span>Last Name</span>
-              <input type="text" name="Lname" required>
+              <input type="text" name="Lname" minlength="3" required>
           </div>
           <div class="inputBox">
             <span>UserName</span>
-            <input type="text" name="username" required>
+            <input type="text" name="username" minlength="5" required>
         </div>
           <div class="inputBox">
             <span>E-mail address</span>
@@ -34,7 +34,7 @@
         </div>
             <div class="inputBox">
                 <span>Create Password</span>
-                <input type="password" name="password" required>
+                <input type="password" name="password" minlength="8" required>
             </div>
             <div class="inputBox">
                 <input type="submit" value="Sign Up">

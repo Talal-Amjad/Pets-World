@@ -21,23 +21,33 @@ const signup = (req, res) => {
     const username = req.body.username;
     const Email = req.body.email;
     const password = req.body.password;
+    const Query = `Select * from user where username ='${username}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send("UserName is already registered please try another username")
+        }
+        else {
+            const user = { Name: Name, UserName: username, Email: Email, Password: password };
+            req.session.newUser = user;
+            //res.send(user);
+            const code = "1e4c734";
 
-    const user = { Name: Name, UserName: username, Email: Email, Password: password };
-    req.session.newUser = user;
-    //res.send(user);
-    const code = "1e4c734";
+            req.session.code = code;
 
-    req.session.code = code;
+            let mail = transporter.sendMail({
+                from: '"Talal Amjad" <petsworld0290@gmail>',
+                to: `${Email}`,
+                subject: "Verification Code For Registration",
+                text: "Hello world?",
+                html: `<h1>PetsWorld Verification Code!</h1>
+                   <p><b>Your Code is : ${code}</b></p>`
+            });
+            res.render("users/verifycode");
+        }
+    })
 
-    let mail = transporter.sendMail({
-        from: '"Talal Amjad" <petsworld0290@gmail>',
-        to: `${Email}`,
-        subject: "Verification Code For Registration",
-        text: "Hello world?",
-        html: `<h1>PetsWorld Verification Code!</h1>
-               <p><b>Your Code is : ${code}</b></p>`
-    });
-    res.render("users/verifycode");
+
 }
 //code verification
 const codeverification = (req, res) => {
@@ -243,18 +253,23 @@ const add_to_cart_list = (req, res) => {
     const Query = `SELECT * from Shoppingdetails where username = '${username}' and status = '${NC}'`;
     connection.query(Query, function (err, result) {
         if (err) throw err;
-        //  console.log(result);
-        const price = result[0].quantity * result[0].price;
-        // console.log(price);
-        res.render("users/selected_list",
-            {
-                data: result,
-                totalprice: price
-            }
+        if (result.length > 0) {
+            const price = result[0].quantity * result[0].price;
+            // console.log(price);
+            res.render("users/selected_list",
+                {
+                    data: result,
+                    totalprice: price
+                }
 
-        );
+            );
+        }
+        else {
+            res.send("Currently You Have not selected any Product")
+        }
     }
     )
+
 }
 //invoice
 const invoice = (req, res) => {
@@ -365,12 +380,22 @@ const add = (req, res) => {
     const price = req.body.price;
     const img = req.file.originalname;
     const quantity = req.body.quantity;
-
-    const Query = `INSERT INTO PRODUCTS  (pid,PName,Discription,Catagory,price,Picture,quantity) VALUES ('${pid}','${Name}','${dis}','${catagory}','${price}','${img}','${quantity}' )`;
-    connection.query(Query, function (err, result) {
+    const Query2 = `Select * from PRODUCTS where pid='${pid}' `;
+    connection.query(Query2, function (err, result2) {
         if (err) throw err;
-        res.redirect("/stock");
+        if (result2.length > 0) {
+            res.send("Product with same ID already exist. please recheck the ID.")
+        }
+        else {
+            const Query = `INSERT INTO PRODUCTS  (pid,PName,Discription,Catagory,price,Picture,quantity) VALUES ('${pid}','${Name}','${dis}','${catagory}','${price}','${img}','${quantity}' )`;
+            connection.query(Query, function (err, result) {
+                if (err) throw err;
+                res.redirect("/stock");
+            })
+        }
+
     })
+
 }
 //admin stock view
 const stock = (req, res) => {
