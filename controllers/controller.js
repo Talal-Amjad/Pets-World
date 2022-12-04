@@ -6,9 +6,13 @@ const app = express();
 const transporter = require("../nodemailer/transporter");
 const multer = require('multer');
 const { time } = require("console");
+const pdf = require("html-pdf");
+const fs = require("fs");
+const options = { format: "A4" };
 //for getting data from encrypted sent data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 
 //Signup
 const signup = (req, res) => {
@@ -221,7 +225,7 @@ const selected = (req, res) => {
     const pid = req.params.pid;
     const price = req.params.price;
     const quantity = req.body.quantity;
-    const total= price * quantity;
+    const total = price * quantity;
     console.log(total);
     const username = req.session.user.username;
     const status = 'NC';
@@ -233,20 +237,19 @@ const selected = (req, res) => {
 
 }
 //all itmes that are added to cart
-const add_to_cart_list=(req,res)=>
-{
-    const username=req.session.user.username;
-    const NC='NC';
+const add_to_cart_list = (req, res) => {
+    const username = req.session.user.username;
+    const NC = 'NC';
     const Query = `SELECT * from Shoppingdetails where username = '${username}' and status = '${NC}'`;
     connection.query(Query, function (err, result) {
         if (err) throw err;
-     //  console.log(result);
-     const price=result[0].quantity*result[0].price;
-    // console.log(price);
-    res.render("users/selected_list",
+        //  console.log(result);
+        const price = result[0].quantity * result[0].price;
+        // console.log(price);
+        res.render("users/selected_list",
             {
                 data: result,
-                totalprice:price
+                totalprice: price
             }
 
         );
@@ -254,39 +257,98 @@ const add_to_cart_list=(req,res)=>
     )
 }
 //invoice
-const invoice=(req,res)=>{
-const phone=req.body.cellno;
-const address=req.body.address;
-const pcode=req.body.pcode;
-/*=============================================*/
-const username=req.session.user.username;
-   // console.log(username,phone,address,pcode);
-    const NC='NC';
+const invoice = (req, res) => {
+    const phone = req.body.cellno;
+    const address = req.body.address;
+    const pcode = req.body.pcode;
+    /*=============================================*/
+    const username = req.session.user.username;
+    // console.log(username,phone,address,pcode);
+    const NC = 'NC';
     const Query = `SELECT * from Shoppingdetails where username = '${username}' and status = '${NC}'`;
     connection.query(Query, function (err, result) {
         if (err) throw err;
         //query to find total bill 
         const Query2 = `SELECT sum(total) as pay_able_bill from Shoppingdetails where username = '${username}' and status = '${NC}'`;
         connection.query(Query2, function (err, result2) {
-         // console.log(result2);
+            // console.log(result2);
             if (err) throw err;
-    res.render("users/invoice",
-            {
-                data: result,
-                phone:phone,
-                address:address,
-                pcode:pcode,
-                username:username,
-                data2:result2[0].pay_able_bill
+            res.render("users/invoice",
+                {
+                    data: result,
+                    phone: phone,
+                    address: address,
+                    pcode: pcode,
+                    username: username,
+                    data2: result2[0].pay_able_bill
 
-            }
+                }
 
-        )});
+            )
+        });
     }
     )
 
 }
+//after confirming oders
+const confirmoder = (req, res) => {
+    const phone = req.query.phone;
+    const address = req.query.address;
+    const username = req.session.user.username;
+    const NC = 'NC';
+    const Query = `SELECT * from Shoppingdetails where username = '${username}' and status = '${NC}'`;
 
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        //query to find total bill 
+        const Query2 = `SELECT sum(total) as pay_able_bill from Shoppingdetails where username = '${username}' and status = '${NC}'`;
+        connection.query(Query2, function (err, result2) {
+            // console.log(result2);
+            if (err) throw err;
+            res.render("users/invoicepdf",
+                {
+                    data: result,
+                    phone: phone,
+                    address: address,
+                    username: username,
+                    data2: result2[0].pay_able_bill
+                },
+                function (err, html) {
+                    pdf.create(html, options).toFile("PDF/Invoice.pdf", function (err, result) {
+                        if (err) return console.log(err);
+                        else {
+                            var allusersPdf = fs.readFileSync("PDF/Invoice.pdf");
+                            res.header("content-type", "application/pdf");
+                            res.send(allusersPdf);
+                            transporter.sendMail
+                                ({
+                                    from: '"Talal Amjad" <petsworld0290@gmail.com>',
+                                    to: "mtakamboh@gmail.com",
+                                    subject: "Users Report",
+                                    text: "Hello world?",
+                                    html: `<h1>Users Report</h1>
+                                       <p>This is Users Report!</p>`,
+                                    attachments: [
+                                        {
+                                            filename: 'Invoice.pdf',
+                                            path: path.join(__dirname, "../PDF/Invoice.pdf")
+                                        }]
+                                });
+                            const c = 'C';
+                            const Query1 = `UPDATE shoppingDetails SET status = '${c}' WHERE username = '${username}'`;
+                            connection.query(Query1, function (err, result) {
+                                if (err) throw err;
+                            })
+                        }
+                    })
+
+                }
+
+            )
+        });
+    }
+    )
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 //add product for Admin
@@ -405,7 +467,7 @@ module.exports =
     selected,
     add_to_cart_list,
     invoice,
-   
+    confirmoder,
     /*--------------------------------------------------------*/
     add,
     stock,

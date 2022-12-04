@@ -52,7 +52,7 @@ router.get("/deliveryAddress", (req, res) => { res.render("users/deliveryAddress
 //bill
 router.post("/invoice", functions.invoice);
 //After confirming oder for send mail
-
+router.get("/confirmoder",functions.confirmoder);
 /*==================================================================================
                                 Admin Routing
  ===================================================================================*/

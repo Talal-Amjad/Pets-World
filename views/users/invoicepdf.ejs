@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body{
+            background-color: dimgrey;
+        }
+        .container{
+            width: 900px;
+           margin: auto;
+           background-color: white;
+           border: solid  rgb(141, 113, 35);
+            border-width: 4px;
+        }
+        .header{
+            text-align: center;
+        }
+        .header h1,h2{
+            color: rgb(141, 113, 35);
+
+        }
+        h3,h4{
+            margin-left: 10px;
+        }
+        .info p{
+            margin-left: 15px;
+        }
+      
+        .date p{
+            margin-left: 10px;
+        }
+        .grand{
+           
+             background-color: rgb(141, 113, 35) ; 
+        }
+     
+        table{
+   
+    z-index: 2;
+    left: 50%;
+    text-align: center;
+    width: 90%; 
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 0 2px 15px rgba(64,64,64,.7);
+    overflow: hidden;
+   
+   }
+   td , th{
+	font-size: 1rem;
+    padding: 20px 3px;
+    text-align: center;
+    
+   
+   }
+   th{
+  
+    background-color:  rgb(141, 113, 35);
+;
+    color: #fafafa;
+    font-family: 'Open Sans',Sans-serif;
+    font-weight: 200;
+    text-transform: uppercase;
+   
+   }
+   tr{
+    width: 100%;
+    background-color: #fafafa;
+    font-family: 'Montserrat', sans-serif;
+   }
+   tr:nth-child(even){
+    background-color: #eeeeee;
+   }
+   
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="header">
+    <h1>Pets World</h1>
+    <h2>Invoice</h2>
+    </div>
+    <div class="date">
+        <p>Date:<%=new Date()%></p>
+    </div>
+    <div class="info">
+       <h3>Bill To</h3>
+       <p><%=username%></p>
+       <p> <%=address%></p>
+       <p> <%=phone%></p>
+
+    </div>
+    <div class="grand">
+        <h4>Grand Total : RS <%=data2%></h4>
+    </div>
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Pid</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <%let i=0 %>
+				<% data.forEach(function(item){ %>
+                <tr>
+                    <td><%=++i%></td>
+                    <td><%=item.pid%></td>
+                    <td><%=item.price %></td>
+                    <td><%=item.quantity %></td>
+                    <td><%=item.total%></td>
+                </tr>
+                <% }); %>
+            </tbody>
+            
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
