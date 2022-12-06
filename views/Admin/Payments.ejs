@@ -92,46 +92,74 @@
         <nav>
             <div class="sidebar-button">
                 <i class='bx bx-menu sidebarBtn'></i>
-                <span class="dashboard">Payments</span>
+                <span class="dashboard">All Oders</span>
             </div>
             <div class="search-box">
-                <input type="text" placeholder="Search...">
+                <input type="text" placeholder="Search..." id="search1" onkeyup="searchFun()">
                 <i class='bx bx-search'></i>
             </div>
         </nav>
-    <h1>Rable</h1>
-    <table >
-
- 
-
-        <tr>
-       
-        <th>Product Id</th>
-        <th>Unit Price</th>
-        <th>Quantity</th>
-        <th>Total Price </th>
-      
-          </tr>
-       
-       
-         <tr>
-       
-        <td>1</td>
-       
-        <td>3000</td>
-       
-        <td>3</td>
-       
-        <td>9000</td>
-       
-        </tr>
-      
+   <div id="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product ID</th>
+                    <th>Customer ID</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                <%let i=0 %>
+                
+                <% data.forEach(function(item){ %>
+                <tr>
+                    <td> <%=++i%></td>
+                    <td> <%=item.pid %></td>
+                    <td> <%=item.username %></td>
+                    <td> <%=item.price %></td>
+                    <td> <%=item.quantity %></td>
+                    <td> <%=item.total%> </td>
+                
+                </tr>
+                <% }); %>
+               
+        
         </table>
-       
+    </div>
     </section>
    
 
-    <script src="/public/script/Admin/stock.js"></script>
+    <script>
+          function searchFun() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search1");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                console.log(td);
+
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    console.log(txtValue);
+
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>

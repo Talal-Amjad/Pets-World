@@ -99,40 +99,37 @@
                 <i class='bx bx-search'></i>
             </div>
         </nav>
-    <h1>Rable</h1>
-    <table >
-
- 
-
-        <tr>
-       
-        <th>Product Id</th>
-        <th>Unit Price</th>
-        <th>Quantity</th>
-        <th>Total Price </th>
-       <th>Deliver Status</th>
-          </tr>
-       
-       
-         <tr>
-       
-        <td>1</td>
-       
-        <td>3000</td>
-       
-        <td>3</td>
-       
-        <td>9000</td>
-       
-       
-        <td> 
-            <a href="" class="btn btn-primary">Delivered</a>
-            <a href="" class="btn btn-danger">Cancelled</a>
-           
-        </td>
-       
-        </tr>
-      
+   
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product ID</th>
+                    <th>Customer ID</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Delete</th>
+                    <th>Confirm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%let i=0 %>
+                
+                <% data.forEach(function(item){ %>
+                <tr>
+                    <td> <%=++i%></td>
+                    <td> <%=item.pid %></td>
+                    <td> <%=item.username %></td>
+                    <td> <%=item.price %></td>
+                    <td> <%=item.quantity %></td>
+                    <td> <%=item.total%> </td>
+                    <td> <a href="/oders/<%=item.pid %>/<%=item.username%>" class="btn btn-danger" >Cancelled </a> </td>
+                    <td> <a href="/oder/<%=item.pid %>/<%=item.username%>" class="btn btn-warning" >Delevered </a> </td>
+                </tr>
+                <% }); %>
+               
+        
         </table>
        
     </section>

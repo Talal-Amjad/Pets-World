@@ -53,6 +53,11 @@ router.get("/deliveryAddress", (req, res) => { res.render("users/deliveryAddress
 router.post("/invoice", functions.invoice);
 //After confirming oder for send mail
 router.get("/confirmoder",functions.confirmoder);
+//feedback routing
+//routing for signin
+router.get("/feedback", (req, res) => { res.render("users/feedback"); });
+//fetcing data from 
+router.post("/feedback", functions.feedback);
 /*==================================================================================
                                 Admin Routing
  ===================================================================================*/
@@ -61,7 +66,7 @@ router.get("/confirmoder",functions.confirmoder);
 router.get("/addproduct", (req, res) => { res.render("Admin/addproduct"); });
 router.post("/addproduct", Auth.Auth, upload.single("img"), functions.add);
 router.get("/adminpanel", Auth.Auth, (req, res) => { res.render("Admin/adminpanel"); });
-router.get("/oders", Auth.Auth, (req, res) => { res.render("Admin/oders"); });
+
 router.get("/Payments", Auth.Auth, (req, res) => { res.render("Admin/Payments"); });
 //stock routing
 router.get("/stock", functions.stock);
@@ -75,4 +80,12 @@ router.get("/userDetails", functions.users);
 //user deletion
 //deletion
 router.get("/userDetails/:UserName", Auth.Auth, functions.deleteuser);
+//all oders confirmed from the users
+router.get("/oders", Auth.Auth, functions.oders);
+//To remove product from the list of oders placed by the users
+router.get("/oders/:pid/:username",functions.canceloder);
+router.get("/oder/:pid/:username",functions.deliveredoder);
+//payment 
+router.get("/payment", functions.payment);
+
 module.exports = router;

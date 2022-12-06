@@ -364,6 +364,17 @@ const confirmoder = (req, res) => {
     }
     )
 }
+//feedback
+const feedback=(req,res)=>{
+    const username = req.session.user.username;
+    const type=req.body.type;
+    const feedback=req.body.feedback;
+    const Query = `INSERT INTO feedback VALUES('${username}','${type}','${feedback}')`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/products");
+    })
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 //add product for Admin
@@ -478,6 +489,80 @@ const deleteuser = (req, res) => {
         res.redirect("/userDetails");
     })
 }
+//List of all Confirmed placed oders by the users
+const oders=(req,res)=>{
+    
+    const Query = `SELECT * from Shoppingdetails where status ='C'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+      
+            res.render("Admin/oders",
+                {
+                    data: result,
+                 
+
+                }
+
+            )
+        });
+    }    
+//Cancelled oders by the Admin
+const canceloder=(req,res)=>
+{
+    const id=req.params.pid;
+    const Name= req.params.username;
+    
+    // res.send(Name);
+    const Query = `DELETE  from shoppingdetails WHERE UserName = '${Name}' and pid='${id}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/oders");
+    })
+}
+//sending data to payment from oders when oder is delivered
+const deliveredoder=(req,res)=>{
+    const id=req.params.pid;
+    const Name= req.params.username;
+    
+    // res.send(Name);
+    const Query = `select *  from shoppingdetails WHERE UserName = '${Name}' and pid='${id}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+       const username=result[0].username;
+       console.log(result);
+       const pid=result[0].pid;
+       const quantity=result[0].qyantity;
+       const price=result[0].price;
+       const total=result[0].total;
+       const Query2 = `insert into payment values('${username}','${pid}','${quantity}','${price}','${total}')`;
+       connection.query(Query2, function (err, result2) {
+           if (err) throw err;
+           const Query3 = `DELETE  from shoppingdetails WHERE UserName = '${Name}' and pid='${id}'`;
+    connection.query(Query3, function (err, result3) {
+        if (err) throw err;
+        res.redirect('/oders');
+    })
+
+    })
+    })
+} 
+
+const payment=(req,res)=>{
+    
+    const Query = `SELECT * from payment`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+      
+            res.render("Admin/Payments",
+                {
+                    data: result,
+                 
+
+                }
+
+            )
+        });
+    }    
 module.exports =
 {
     signup,
@@ -493,6 +578,7 @@ module.exports =
     add_to_cart_list,
     invoice,
     confirmoder,
+    feedback,
     /*--------------------------------------------------------*/
     add,
     stock,
@@ -500,5 +586,9 @@ module.exports =
     selection_update,
     update,
     users,
-    deleteuser
+    deleteuser,
+    oders,
+    canceloder,
+    deliveredoder,
+    payment
 }

@@ -94,49 +94,91 @@
                 <i class='bx bx-menu sidebarBtn'></i>
                 <span class="dashboard">Stock</span>
             </div>
-            <div class="search-box">
-                <input type="text" placeholder="Search...">
+            <div class="search-box" id="search">
+                <input type="text" placeholder="Search..." id="search1" onkeyup="searchFun()">
                 <i class='bx bx-search'></i>
             </div>
         </nav>
-       
-        <table>
+        <div id="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Disription</th>
+                        <th>Catageory </th>
+                        <th>Unit Price</th>
+                        <th>Quantity</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    <% data.forEach(function(product){ %>
+                        <tr>
+                            <td>
+                                <%=product.pid%>
+                            </td>
+                            <td>
+                                <%=product.PName%>
+                            </td>
+                            <td>
+                                <%=product.Discription%>
+                            </td>
+                            <td>
+                                <%=product.Catagory%>
+                            </td>
+                            <td>
+                                <%=product.price%>
+                            </td>
+                            <td>
+                                <%=product.quantity%>
+                            </td>
+                            <td> <a href="/update/<%= product.pid %>" class="btn btn-primary">Edit</a></td>
+                            <td> <a href="/stock/<%= product.pid %>" class="btn btn-danger">Del</a> </td>
+                        </tr>
+                        <%})%>
+                </tbody>
 
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Product Name</th>
-                    <th>Disription</th>
-                    <th>Catageory </th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                <% data.forEach(function(product){ %>
-                <tr>
-                    <td><%=product.pid%></td>
-                    <td><%=product.PName%></td>
-                    <td><%=product.Discription%></td>
-                    <td><%=product.Catagory%></td>
-                    <td><%=product.price%></td>
-                    <td><%=product.quantity%></td>
-                    <td> <a href="/update/<%= product.pid %>" class="btn btn-primary">Edit</a></td>
-                    <td> <a href="/stock/<%= product.pid %>" class="btn btn-danger">Del</a> </td>
-                </tr>
-                <%})%>
-            </tbody>
-
-        </table>
-
+            </table>
+        </div>
     </section>
 
 
-    <script src="/script/Admin/stock.js"></script>
+    <script>
+        function searchFun() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search1");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+
+            console.log(input);
+            console.log(filter);
+            console.log(table);
+            console.log(tr);
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                console.log(td);
+
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    console.log(txtValue);
+
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    </script>
 </body>
 
 </html>

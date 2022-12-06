@@ -123,7 +123,7 @@ header .header-2 .navbar ul li{
 
 header .header-2 .navbar ul li a{
     font-size: 2rem;
-    color:#fff;
+    color:black;
 }
 
 header .header-2 .navbar ul li a.active,
@@ -726,3 +726,46 @@ transform: translate(0px,-8px);
         width:100
     }
 }
+
+   .dropdown{
+    display:inline-block;
+    position:relative;
+    }
+    
+     .dropdown button{
+    border:none;
+    font-size: 2rem;
+    color:black;
+    padding:8px 16px;
+    background-color:rgb(141, 113, 35);;
+    transition:.3s;
+    cursor:pointer;
+    }
+     .dropdown div{
+    background-color:rgb(83, 77, 61);
+    box-shadow:rgb(83, 77, 61);
+    z-index:10;
+    visibility:hidden;
+    position:absolute;
+    min-width:100%;
+    opacity:0;
+    transition:.3s;
+    }
+    
+     .dropdown:hover div{
+    visibility:visible;
+    opacity:1;
+    }
+    
+     .dropdown div a{
+    display:block;
+    text-decoration:none;
+    padding:8px;
+    color:#000;
+    transition:.1s;
+    white-space:nowrap;
+    }
+    
+     .dropdown div a:hover{
+    color:#fff;
+    }

@@ -9,8 +9,8 @@
 .sidebar{
   position: fixed;
   height: 100%;
-  width: 200px;
-  background: #0A2558;
+  width: 240px;
+  background: rgb(141, 113, 35);
   transition: all 0.5s ease;
 }
 .sidebar.active{
@@ -50,10 +50,10 @@
   transition: all 0.4s ease;
 }
 .sidebar .nav-links li a.active{
-  background: #081D45;
+  background:rgb(141, 113, 35);
 }
 .sidebar .nav-links li a:hover{
-  background: #081D45;
+  background: rgb(141, 113, 35);
 }
 .sidebar .nav-links li i{
   min-width: 60px;
@@ -167,7 +167,7 @@ table{
    }
    th{
   
-    background-color: #081D45;
+    background-color:rgb(141, 113, 35);
     color: #fafafa;
     font-family: 'Open Sans',Sans-serif;
     font-weight: 200;

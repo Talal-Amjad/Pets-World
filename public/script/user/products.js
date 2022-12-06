@@ -64,3 +64,24 @@ $(document).ready(function(){
     });
 
 });
+
+//
+function searchFun(){
+    let filter=document.getElementById('search').value.toUpperCase();
+    let item=document.querySelectorAll('.content1');
+    // let l=document.getElementsByTagName('h2');
+
+    for(let i=0;i<item.length;i++)
+    {
+        let a=item[i].getElementsByTagName('h2')[0];
+        let value= a.innerHTML || a.innerText || a.textContent;
+        if(value.toLocaleUpperCase().lastIndexOf(filter)>-1)
+        {
+            item[i].style.display="";
+
+        }
+        else{
+            item[i].style.display="none";
+        }
+    }
+}

@@ -29,7 +29,7 @@
 
     <div class="form-container">
         <form action="">
-            <input type="search" placeholder="search products" id="search" /> 
+            <input type="text" placeholder="search products"  id="search" onkeyup="searchFun()" /> 
             <label for="search" class="fas fa-search"></label>
         </form>
     </div>
@@ -42,19 +42,43 @@
 
     <nav class="navbar">
         <ul>
-            <li><a class="active" href="/views/index.html">home</a></li>
-            <li><a href="#home">Sorting</a></li>
+            <li><a class="active" href="/views/index">home</a></li>
+            <li> <div class="dropdown">
+                <button>Sorting</button>
+                <div>
+                  <a href="">Ascending</a>
+                  <a href="">Descending</a>
+                </div>
+              </div>
+             </li>
             <li><a href="#featured">Featured</a></li>
-            <li><a href="#gallery">Category</a></li>
+            <li>
+                <div class="dropdown">
+                    <button>Catagory</button>
+                    <div>
+                      <a href="">Cat</a>
+                      <a href="">Fish</a>
+                      <a href="">Dog</a>
+                      <a href="">Birds</a>
+                    </div>
+                  </div> 
+            </li>
             <li><a href="#deal">Deals</a></li>
             <li><a href="#deal">Chat</a></li>
         </ul>
     </nav>
 
     <div class="icons">
+        <div class="dropdown">
+            <button> <a href="#" class="fas fa-user"></a></button>
+            <div>
+              <a href="">Reset PSW  </a>
+              <a href="">Logout</a>
+             
+            </div>
+          </div> 
         <a href="#" class="fas fa-heart"></a>
-        <a href="/selectedlist" class="fas fa-shopping-cart"></a>
-        <a href="#" class="fas fa-user"></a>
+        <a href="/selectedlist" class="fas fa-shopping-cart"></a>   
     </div>
 
 </div>
@@ -120,10 +144,11 @@
 <!-- Cards-->
 <!---->
 <section class="cards">
-    <div class="gallery">
+    <div class="gallery" id="gallery1">
         <% data.forEach(function(item){ %>
         <div class="content1">
             <img src="/images/<%= item.picture %>" alt="image">
+            <h2><%= item.PName %></h2>
             <h3>ID: <%= item.pid %></h3>
             <p>   <%= item.Discription %> </p>
             <h4>Catagory :  <%= item.Catagory %> </h4>
@@ -274,5 +299,6 @@
 <!-- custom js file link  -->
 
 <script src="/script/user/products.js"></script>
+
 </body>
 </html>
