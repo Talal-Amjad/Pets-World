@@ -12,8 +12,11 @@ const options = { format: "A4" };
 //for getting data from encrypted sent data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-
+//User Logout
+const userlogout=(req,res)=>{
+    req.session.user = null;
+    res.redirect("/");
+}
 //Signup
 const signup = (req, res) => {
 
@@ -435,6 +438,10 @@ const delete_from_wishlist=(req,res)=>{
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+const Adminlogout=(req,res)=>{
+    req.session.admin = null;
+    res.redirect("/");
+}
 //add product for Admin
 const add = (req, res) => {
 
@@ -671,6 +678,7 @@ const payment=(req,res)=>{
 
 module.exports =
 {
+    userlogout,
     signup,
     codeverification,
     register,
@@ -692,6 +700,7 @@ module.exports =
     view_wishlist,
     delete_from_wishlist,
     /*--------------------------------------------------------*/
+    Adminlogout,
     add,
     stock,
     deletetion,

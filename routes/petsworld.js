@@ -15,6 +15,9 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) { cb(null, file.originalname) }
 })
 const upload = multer({ storage: storage });
+
+//routing user logout
+router.get("/userlogout",functions.userlogout);
 //user routing pages
 router.get("/", (req, res) => { res.render("users/index"); });
 //Routing for signup
@@ -73,6 +76,8 @@ router.get("/view_wishlist/:pid", functions.delete_from_wishlist);
                                 Admin Routing
  ===================================================================================*/
 //admin routing
+//routing Admin logout
+router.get("/adminlogout",functions.Adminlogout);
 //routing addproducts
 router.get("/addproduct", (req, res) => { res.render("Admin/addproduct"); });
 router.post("/addproduct", Auth.Auth, upload.single("img"), functions.add);
@@ -98,5 +103,7 @@ router.get("/oders/:pid/:username",functions.canceloder);
 router.get("/oder/:pid/:username",functions.deliveredoder);
 //payment 
 router.get("/payment", functions.payment);
+
+
 
 module.exports = router;
