@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    table{
+        margin-top: 30px;
+        width: 100%;
+        height: fit-content;
+    }
+    table, th, td {
+  border: 1px solid;
+}
+</style>
+<body>
+   <div id="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product ID</th>
+                    <th>Customer ID</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                
+                </tr>
+            </thead>
+            <tbody>
+                <%let i=0 %>
+                
+                <% data.forEach(function(item){ %>
+                <tr>
+                    <td> <%=++i%></td>
+                    <td> <%=item.pid %></td>
+                    <td> <%=item.username %></td>
+                    <td> <%=item.price %></td>
+                    <td> <%=item.quantity %></td>
+                    <td> <%=item.total%> </td>
+                
+                </tr>
+                <% }); %>
+               
+        </table>
+    </div>
+</body>
+
+</html>

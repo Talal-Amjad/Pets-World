@@ -32,6 +32,10 @@ router.post("/RegisterUser", functions.register);
 router.get("/Signin", (req, res) => { res.render("users/Signin"); });
 //fetcing data from 
 router.post("/Signin", functions.signin);
+//routing for reset Password
+router.get("/resetpsw", (req, res) => { res.render("users/resetPassword"); });
+//fetcing data from 
+router.post("/resetpsw", functions.resetpsw);
 //routing for password change request.
 router.get("/changerequest", (req, res) => { res.render("users/pswChangeRequest"); });
 router.post("/changerequest", functions.changerequest);
@@ -81,7 +85,7 @@ router.get("/adminlogout",functions.Adminlogout);
 //routing addproducts
 router.get("/addproduct", (req, res) => { res.render("Admin/addproduct"); });
 router.post("/addproduct", Auth.Auth, upload.single("img"), functions.add);
-router.get("/adminpanel", Auth.Auth, (req, res) => { res.render("Admin/adminpanel"); });
+router.get("/adminpanel", Auth.Auth, functions.dashboard);
 
 router.get("/Payments", Auth.Auth, (req, res) => { res.render("Admin/Payments"); });
 //stock routing
@@ -105,4 +109,6 @@ router.get("/oder/:pid/:username",functions.deliveredoder);
 router.get("/payment", functions.payment);
 //view all users feedback
 router.get("/viewfeedback", functions.viewfeedback);
+//sending reports
+router.get("/paymentpdf",functions.paymentpdf); 
 module.exports = router;

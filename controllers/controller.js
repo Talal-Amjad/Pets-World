@@ -436,6 +436,29 @@ const delete_from_wishlist=(req,res)=>{
         res.redirect("/view_wishlist");
     })
 }
+
+const resetpsw=(req,res)=>
+{
+ const username=req.session.user.username;
+ const psw=req.body.psw;
+ const npsw=req.body.npsw;
+ const Query = `select * from user where username='${username}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        const pass=result[0].Password;
+        console.log(pass);
+        if(pass!=psw)
+        {
+            res.send('Incorrect current password');
+        }
+        else{
+            const Query2 = `update user set password='${npsw}' where username='${username}'`;
+            connection.query(Query2, function (err, result2) {
+                if (err) throw err;})
+                res.redirect("/products");
+        }
+    })
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 const Adminlogout=(req,res)=>{
@@ -594,9 +617,8 @@ const deliveredoder=(req,res)=>{
     connection.query(Query, function (err, result) {
         if (err) throw err;
        const username=result[0].username;
-       console.log(result);
        const pid=result[0].pid;
-       const quantity=result[0].qyantity;
+       const quantity=result[0].quantity;
        const price=result[0].price;
        const total=result[0].total;
        const Query2 = `insert into payment values('${username}','${pid}','${quantity}','${price}','${total}')`;
@@ -691,6 +713,79 @@ const payment=(req,res)=>{
             )
         });
   }  
+const dashboard=(req,res)=>{
+    const C='C';
+    const Query = `select count(pid) as orders_count from shoppingdetails where status='${C}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        const Query2 = `select sum(quantity) as sales_count from payment`;
+        connection.query(Query2, function (err, result2) {
+            if (err) throw err;
+            const Query3 = `select sum(total) as earning from payment`;
+            connection.query(Query3, function (err, result3) {
+                if (err) throw err;
+                const Query4 = `select sum(quantity) as stock from products`;
+                connection.query(Query4, function (err, result4) {
+                    if (err) throw err;
+                    res.render("Admin/adminpanel",
+                    {
+                        totalOrders:result[0].orders_count,
+                        totalSales:result2[0].sales_count,
+                        totalEarning:result3[0].earning,
+                        stock:result4[0].stock
+                    })
+                    
+                })
+            })
+        })
+       
+      
+        
+
+    })
+}
+const paymentpdf=(req,res)=>
+{
+    const Query = `SELECT * from payment`;
+
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        //query to find total bill 
+          res.render("Admin/paymentpdf",
+                {
+                    data: result,
+                   
+                },
+                function (err, html) {
+                    pdf.create(html, options).toFile("PDF/PaymentDetails.pdf", function (err, result) {
+                        if (err) return console.log(err);
+                        else {
+                            var allusersPdf = fs.readFileSync("PDF/PaymentDetails.pdf");
+                            res.header("content-type", "application/pdf");
+                            res.send(allusersPdf);
+                            transporter.sendMail
+                                ({
+                                    from: '"Pets World" <petsworld0290@gmail.com>',
+                                    to: "mtakamboh@gmail.com",
+                                    subject: "Users Report",
+                                    text: "Hello world?",
+                                    html: `<h1>Payment Details</h1>
+                                       <p>This is Payment Report!</p>`,
+                                    attachments: [
+                                        {
+                                            filename: 'PaymentDetails.pdf',
+                                            path: path.join(__dirname, "../PDF/PaymentDetails.pdf")
+                                        }]
+                                });
+                        }
+                    })
+
+                }
+
+            )
+        });
+    }
+    
 
 module.exports =
 {
@@ -715,6 +810,7 @@ module.exports =
     add_to_wishlist,
     view_wishlist,
     delete_from_wishlist,
+    resetpsw,
     /*--------------------------------------------------------*/
     Adminlogout,
     add,
@@ -728,5 +824,7 @@ module.exports =
     canceloder,
     deliveredoder,
     payment,
-    viewfeedback
+    viewfeedback,
+    dashboard,
+    paymentpdf
 }
