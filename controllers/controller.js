@@ -195,7 +195,7 @@ const products = (req, res) => {
 
         let dataCount = result[0]["COUNT(*)"];
         let pageNo = req.query.page ? req.query.page : 1;
-        let dataPerPages = req.query.data ? req.query.data : 1;
+        let dataPerPages = req.query.data ? req.query.data : 4;
         let startLimit = (pageNo - 1) * dataPerPages;
         let totalPages = Math.ceil(dataCount / dataPerPages);
 
