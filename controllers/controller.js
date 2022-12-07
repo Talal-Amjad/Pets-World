@@ -175,7 +175,7 @@ const changepassword = (req, res) => {
 }
 //user products view
 const products = (req, res) => {
-    const Query = "SELECT * FROM Products";
+   /* const Query = "SELECT * FROM Products";
     connection.query(Query, function (err, result) {
         if (err) throw err;
         // console.log(result);
@@ -188,7 +188,33 @@ const products = (req, res) => {
 
         );
     }
-    )
+    )*/
+    const dataCountQuery = "SELECT COUNT(*) FROM Products";
+    connection.query(dataCountQuery, function (err, result) {
+        if (err) throw err;
+
+        let dataCount = result[0]["COUNT(*)"];
+        let pageNo = req.query.page ? req.query.page : 1;
+        let dataPerPages = req.query.data ? req.query.data : 1;
+        let startLimit = (pageNo - 1) * dataPerPages;
+        let totalPages = Math.ceil(dataCount / dataPerPages);
+
+        // console.log(dataCount, "\n", pageNo, "\n",dataPerPages, "\n",startLimit, "\n",totalPages, "\n");
+
+        const Query = `SELECT * FROM products LIMIT ${startLimit}, ${dataPerPages}`;
+        connection.query(Query, function (err, result) {
+            if (err) throw err;
+            // res.send(result);
+            res.render("users/products",
+                {
+                    data: result,
+                    pages: totalPages,
+                    CurrentPage: pageNo,
+                    lastPage: totalPages
+                }
+            );
+        })
+    });
 }
 //productDetails
 const productDetails = (req, res) => {
