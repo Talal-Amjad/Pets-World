@@ -47,6 +47,8 @@ router.get("/Billing", (req, res) => { res.render("users/Billing"); });
 router.post("/selectedproducts/:pid/:price", functions.selected);
 //list of products that are added to cart
 router.get("/selectedlist", functions.add_to_cart_list);
+//delltig products from add_to_cart_list
+router.get("/selectedlist/:pid", functions.delete_from_add_to_cart_list);
 //Delivery Address
 router.get("/deliveryAddress", (req, res) => { res.render("users/deliveryAddress"); });
 //bill
@@ -58,11 +60,15 @@ router.get("/confirmoder",functions.confirmoder);
 router.get("/feedback", (req, res) => { res.render("users/feedback"); });
 //fetcing data from 
 router.post("/feedback", functions.feedback);
-
+//ratings
 router.post("/addRating", functions.getRating);
-
 router.get("/ratings", functions.Rating);
-
+//add_to_wish_List
+router.get("/add_to_wishlist/:pid", functions.add_to_wishlist);
+//view wishlist
+router.get("/view_wishlist",functions.view_wishlist)
+//delete from wishlist
+router.get("/view_wishlist/:pid", functions.delete_from_wishlist);
 /*==================================================================================
                                 Admin Routing
  ===================================================================================*/

@@ -23,36 +23,20 @@
 
 <div class="header-2">
 
-    <div id="menu" class="fas fa-bars"></div>
-
     <nav class="navbar">
         <ul>
-            <li><a class="active" href="/views/index">home</a></li>
-            <li><a href="#home">Sorting</a></li>
-            <li><a href="#featured">Featured</a></li>
-            <li><a href="#gallery">Category</a></li>
-            <li><a href="#deal">Deals</a></li>
-            <li><a href="#deal">Chat</a></li>
+            <li><a href="#deal">Products</a></li>
         </ul>
     </nav>
-    <div class="icons">
-        <a href="#" class="fas fa-heart"></a>
-        <a href="#" class="fas fa-shopping-cart"></a>
-        <a href="#" class="fas fa-user"></a>
-    </div>
 </header>
 <section>
     <div>
-<h1>Selected Items</h1>
 <table>
     <thead>
         <tr>
             <th>#</th>
-            <th>Product Name</th>
-         <th>Unit Price</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
-            <th>Delete</th>
+            <th>Product ID</th>
+            <th>Remove</th>
         </tr>
     </thead>
     <tbody>
@@ -62,18 +46,13 @@
         <tr>
             <td> <%=++i%></td>
             <td> <%=item.pid %></td>
-            <td> <%=item.price %></td>
-            <td> <%=item.quantity %></td>
-            <td> <%=totalprice%> </td>
-            <td> <a href="/selectedlist/<%=item.pid %>" class="btn btn-danger" >Delete </a> </td>
+            <td><a href="/view_wishlist/<%=item.pid %>" class="btn btn-danger" >Delete </a> </td>
         </tr>
         <% }); %>
        
     </tbody>
 
 </table>
-<div><a href="/deliveryAddress" type="button" class="cta">Buy Now</a></div>
-</div>
 </section>
 
 <!-- partial footer  -->

@@ -271,6 +271,18 @@ const add_to_cart_list = (req, res) => {
     )
 
 }
+//delete product from add to card list
+const delete_from_add_to_cart_list=(req,res)=>{
+    const id=req.params.pid;
+    const username = req.session.user.username;
+    const NC='NC';
+    // res.send(Name);
+    const Query = `DELETE  from shoppingdetails WHERE UserName = '${username}' and pid='${id}'  and status='${NC}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/selectedlist");
+    })
+}
 //invoice
 const invoice = (req, res) => {
     const phone = req.body.cellno;
@@ -373,6 +385,52 @@ const feedback=(req,res)=>{
     connection.query(Query, function (err, result) {
         if (err) throw err;
         res.redirect("/products");
+    })
+}
+//add_to_wishList
+const add_to_wishlist=(req,res)=>{
+    const pid = req.params.pid;
+    const username = req.session.user.username;
+    const Query = `INSERT INTO wishlist VALUES('${username}','${pid}')`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect(`/products`);
+    })
+}
+//view to wish list
+const view_wishlist=(req,res)=>
+{
+    const username = req.session.user.username;
+    const Query = `SELECT * from wishlist where username = '${username}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        if (result.length > 0) {
+            const price = result[0].quantity * result[0].price;
+            // console.log(price);
+            res.render("users/wishlist",
+                {
+                    data: result,
+                    totalprice: price
+                }
+
+            );
+        }
+        else {
+            res.send("Currently You Have not selected any Product")
+        }
+    }
+    )
+}
+//deleteing from wishlist
+const delete_from_wishlist=(req,res)=>{
+    const id=req.params.pid;
+    const username = req.session.user.username;
+    
+    // res.send(Name);
+    const Query = `DELETE  from wishlist WHERE UserName = '${username}' and pid='${id}'`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        res.redirect("/view_wishlist");
     })
 }
 /*--------------------------------------------------------------------------*/
@@ -609,7 +667,8 @@ const payment=(req,res)=>{
 
             )
         });
-    }    
+    }   
+
 module.exports =
 {
     signup,
@@ -625,9 +684,13 @@ module.exports =
     comment,
     selected,
     add_to_cart_list,
+    delete_from_add_to_cart_list,
     invoice,
     confirmoder,
     feedback,
+    add_to_wishlist,
+    view_wishlist,
+    delete_from_wishlist,
     /*--------------------------------------------------------*/
     add,
     stock,
