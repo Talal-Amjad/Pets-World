@@ -6,12 +6,11 @@
     text-transform: capitalize;
 }
 
-body {
+
+
+
+.section {
     text-align: center;
-}
-
-
-section {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -19,13 +18,13 @@ section {
     align-items: center;
 }
 
-section .imagebox {
+.section .imagebox {
     position: relative;
     width: 40%;
     height: 100%;
 }
 
-section .imagebox:before {
+.section .imagebox:before {
     content: '';
     position: absolute;
     top: 0;
@@ -37,7 +36,7 @@ section .imagebox:before {
     mix-blend-mode: screen;
 }
 
-section .imagebox img {
+.section .imagebox img {
     position: absolute;
     top: 0;
     left: 0;
@@ -47,7 +46,7 @@ section .imagebox img {
     border-radius: 10%;
 }
 
-section .container {
+.section .container {
     float: right;
     width: 550px;
     padding: 30px 10px;
@@ -58,31 +57,31 @@ section .container {
     margin-right: 25px;
 }
 
-section .container form .header {
+.section .container form .header {
     text-align: center;
 }
 
-section .container form .inputs {
+.section .container form .inputs {
     margin: 10px 0;
 }
 
-section .container form .inputs span {
+.section .container form .inputs span {
     text-align: left;
     margin-left: 60px;
     padding-bottom: 10px;
     display: block;
 }
 
-section .container form .inputs input {
+.section .container form .inputs input {
     width: 75%;
     height: 35px;
 }
 
-section .container form .inputs input:focus {
+.section .container form .inputs input:focus {
     background-color: rgb(236, 236, 234);
 }
 
-section .container form .inputs input:hover {
+.section .container form .inputs input:hover {
     background-color: rgb(236, 236, 234);
 }
 
@@ -109,14 +108,17 @@ input[type="reset"]:hover {
 
 }
 
-section .container form .inputs .error {
+.section .container form .inputs .error {
     color: red;
     font-size: 11px;
     text-align: left;
     margin-left: 46px;
 }
 
-section .container form .inputs select {
+.section .container form .inputs select {
     width: 75%;
     height: 35px;
+}
+.footer{
+    display: block;
 }

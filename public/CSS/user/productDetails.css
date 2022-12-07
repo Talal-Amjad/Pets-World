@@ -86,7 +86,7 @@ p {
 }
 #header .header {
 	min-height: 8vh;
-	background-color: rgb(56, 55, 55);
+	background-color:rgb(141, 113, 35);
 	transition: 0.3s ease background-color;
 }
 #header .nav-bar {
@@ -144,7 +144,7 @@ p {
 	letter-spacing: initial;
 }
 #header .nav-list ul li:hover a {
-	color:rgb(141, 113, 35);
+	color:black;
 }
 #header .hamburger {
 	height: 60px;

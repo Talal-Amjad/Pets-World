@@ -58,6 +58,11 @@ router.get("/confirmoder",functions.confirmoder);
 router.get("/feedback", (req, res) => { res.render("users/feedback"); });
 //fetcing data from 
 router.post("/feedback", functions.feedback);
+
+router.post("/addRating", functions.getRating);
+
+router.get("/ratings", functions.Rating);
+
 /*==================================================================================
                                 Admin Routing
  ===================================================================================*/

@@ -547,6 +547,53 @@ const deliveredoder=(req,res)=>{
     })
 } 
 
+const Rating = (req, res) => {
+
+    const pid = req.query.id;
+    const Query = `Select count(Ratingno) as RatingNo from rating where pid='${pid}' and ratingno=1`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+        const Query1 = `Select count(Ratingno) as RatingNo from rating where pid='${pid}' and ratingno=2`;
+        connection.query(Query1, function (err, result1) {
+            if (err) throw err;
+            const Query2 = `Select count(Ratingno) as RatingNo from rating where pid='${pid}' and ratingno=3`;
+            connection.query(Query2, function (err, result2) {
+                if (err) throw err;
+                const Query3 = `Select count(Ratingno) as RatingNo from rating where pid='${pid}' and ratingno=4`;
+                connection.query(Query3, function (err, result3) {
+                    if (err) throw err;
+                    const Query4 = `Select count(Ratingno) as RatingNo from rating  where pid='${pid}' and ratingno=5`;
+                    connection.query(Query4, function (err, result4) {
+                        if (err) throw err;
+                        console.log(result);
+                        res.render("users/ratings",{result:result,result1:result1,result2:result2,result3:result3,result4:result4, pid:pid});
+                    })
+                  
+                })
+            })
+          
+        })
+    })
+    
+
+   
+}
+
+const getRating = (req, res) => {
+     //route behind button -> /addRating/?id=productID
+    
+     const pid = req.query.id;
+     const username = req.session.user.username;;
+     const newUserName = `${username}${pid}`;
+     const rating = req.body.rating;
+     const Query = `INSERT INTO rating VALUES ('${username}','${pid}','${rating}')`;
+     connection.query(Query, function (err, result) {
+         if (err) throw err;
+         res.redirect(`/ratings/?id=${pid}`);
+     })
+
+}
+
 const payment=(req,res)=>{
     
     const Query = `SELECT * from payment`;
@@ -569,6 +616,8 @@ module.exports =
     codeverification,
     register,
     signin,
+    Rating,
+    getRating,
     changerequest,
     changepassword,
     products,
