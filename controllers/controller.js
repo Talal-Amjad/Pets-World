@@ -676,6 +676,22 @@ const payment=(req,res)=>{
         });
     }   
 
+  const viewfeedback=(req,res)=>{
+    const Query = `SELECT * from feedback`;
+    connection.query(Query, function (err, result) {
+        if (err) throw err;
+      
+            res.render("Admin/feedback",
+                {
+                    data: result,
+                 
+
+                }
+
+            )
+        });
+  }  
+
 module.exports =
 {
     userlogout,
@@ -711,5 +727,6 @@ module.exports =
     oders,
     canceloder,
     deliveredoder,
-    payment
+    payment,
+    viewfeedback
 }

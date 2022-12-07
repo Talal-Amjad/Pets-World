@@ -103,7 +103,6 @@ router.get("/oders/:pid/:username",functions.canceloder);
 router.get("/oder/:pid/:username",functions.deliveredoder);
 //payment 
 router.get("/payment", functions.payment);
-
-
-
+//view all users feedback
+router.get("/viewfeedback", functions.viewfeedback);
 module.exports = router;

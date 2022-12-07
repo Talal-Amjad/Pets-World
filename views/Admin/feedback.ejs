@@ -83,11 +83,10 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Product ID</th>
-                    <th>Customer ID</th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
+                    <th>username</th>
+                    <th>type</th>
+                    <th>Messgae</th>
+                   
                 
                 </tr>
             </thead>
@@ -97,11 +96,9 @@
                 <% data.forEach(function(item){ %>
                 <tr>
                     <td> <%=++i%></td>
-                    <td> <%=item.pid %></td>
                     <td> <%=item.username %></td>
-                    <td> <%=item.price %></td>
-                    <td> <%=item.quantity %></td>
-                    <td> <%=item.total%> </td>
+                    <td> <%=item.type %></td>
+                    <td> <%=item.feedback %></td>
                 
                 </tr>
                 <% }); %>

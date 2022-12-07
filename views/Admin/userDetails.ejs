@@ -14,74 +14,53 @@
 
 <body>
     <div class="sidebar">
-        <div class="logo-details">
-            <img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAUpJREFUSEu9lW1NA0EQhp8qoSgAFBQHtArAAaAAUAAooFUAKCB1QB0UB6AA8ia7zXQ6e3u3ybHJ/rqZ99n5vAkjn8nI+vQBXAEz4DRdvekz3TfgveuRXYA58AhMK1FugVtAsINTAjwB1wPTJx+B9k4EaBHPos/AjSV4gNLyOvDl3nxh0+UByueR83gA7gOoiq4G8KmUxnG2twAZvwRCJUA2VXEvnN8uCgtYApcdAEVxl75/AwKrXufAh/Nbpej25kC9fdITILN1Eo8A0jqTkY3gt1DcnCIbwU+qSymCnfYQQKm5ohqEgFqKPEBdpA5Sc/izyWultci1UQmLXGtTW4MaIGxTOXUNWl/Al12Q/74qFMWoyy7ntgVysEn9oPnCabMK5Jeft1POtaIH/XCsiEC66vu8StTnmhuJhsLRNq21XtP3Pj/9JuHs9AegBUgZFAFMjwAAAABJRU5ErkJggg==" />
 
-        </div>
         <ul class="nav-links">
             <li>
-                <a href="#" class="active">
+                <a href="/adminpanel" class="active">
                     <i class='bx bx-grid-alt'></i>
                     <span class="links_name">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bx-box'></i>
-                    <span class="links_name">Product</span>
-                </a>
-            </li>
             <li>
-                <a href="#">
+                <a href="/addproduct">
                     <i class='bx bx-list-ul'></i>
-                    <span class="links_name">Order list</span>
+                    <span class="links_name">Add product</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Analytics</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
+                <a href="/stock">
                     <i class='bx bx-coin-stack'></i>
                     <span class="links_name">Stock</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/oders">
                     <i class='bx bx-book-alt'></i>
-                    <span class="links_name">Total order</span>
+                    <span class="links_name">Orders</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/payment">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="links_name">Revenue</span>
+                </a>
+            </li>
+            <li>
+                <a href="/userDetails">
                     <i class='bx bx-user'></i>
-                    <span class="links_name">users</span>
+                    <span class="links_name">Users</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/viewfeedback">
                     <i class='bx bx-message'></i>
-                    <span class="links_name">Messages</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-heart'></i>
-                    <span class="links_name">Favrorites</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cog'></i>
-                    <span class="links_name">Setting</span>
+                    <span class="links_name">Feedback</span>
                 </a>
             </li>
             <li class="log_out">
-                <a href="#">
+                <a href="/adminlogout">
                     <i class='bx bx-log-out'></i>
                     <span class="links_name">Log out</span>
                 </a>
@@ -99,40 +78,45 @@
                 <i class='bx bx-search'></i>
             </div>
         </nav>
-    <h1>Rable</h1>
-    <table >
+        <table>
+            <tr>
+                <th>#</th>
 
- 
+                <th>Username</th>
 
-        <tr>
-       
-        <th>#</th>
-       
-        <th>Username</th>
-       
-        <th>Ful Name</th>
-       
-        <th>Email </th>
-       
-        <th>Password</th>
-        <th>Delete</th>
-       
-        </tr>
-       <%let i=0 %>
-        <% data.forEach(function(user){ %>
-         <tr>
-       <td><%=++i%></td>
-       <td><%=user.Name%></td>
-       <td><%=user.UserName%></td>
-        <td><%=user.email%></td>
-        <td><%=user.Password%></td>
-        <td> <a href="/userDetails/<%= user.UserName %>" class="btn btn-danger">Del</a> </td>
-        </tr>
-        <%})%>
+                <th>Ful Name</th>
+
+                <th>Email </th>
+
+                <th>Password</th>
+                <th>Delete</th>
+
+            </tr>
+            <%let i=0 %>
+                <% data.forEach(function(user){ %>
+                    <tr>
+                        <td>
+                            <%=++i%>
+                        </td>
+                        <td>
+                            <%=user.Name%>
+                        </td>
+                        <td>
+                            <%=user.UserName%>
+                        </td>
+                        <td>
+                            <%=user.email%>
+                        </td>
+                        <td>
+                            <%=user.Password%>
+                        </td>
+                        <td> <a href="/userDetails/<%= user.UserName %>" class="btn btn-danger">Del</a> </td>
+                    </tr>
+                    <%})%>
         </table>
-       
+
     </section>
-   
+
 
     <script src="/public/script/Admin/userdetails.js"></script>
 </body>
